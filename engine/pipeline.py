@@ -1,7 +1,8 @@
 # engine/pipeline.py
 # Scribe AI — Unified Pipeline
 # Connects: Detection Engine → Bible Database → Display Engine
-# Now also tracks Service State and gates scripture detection during WORSHIP
+# Tracks Service State. Scripture detection active outside WORSHIP.
+# Lyric detection active only during WORSHIP (log-only, not yet displayed).
 
 import threading
 import time
@@ -9,6 +10,7 @@ from engine.detection.scripture_detector import detect_scripture_references
 from engine.bible.bible_db import lookup_verse
 from engine.display.display_engine import ScriptureDisplay
 from engine.state.service_state_machine import ServiceStateMachine, ServiceState
+from engine.songs.lyric_detector import LyricDetector
 
 
 class ScribePipeline:
@@ -16,16 +18,14 @@ class ScribePipeline:
         self.display_seconds = display_seconds
         self.display = ScriptureDisplay(display_seconds=display_seconds)
         self.state_machine = ServiceStateMachine()
+        self.lyric_detector = LyricDetector()
 
     def process_text(self, text: str):
         """
         Takes a block of text:
         1. Updates the Service State Machine
-        2. Gates scripture detection if currently in WORSHIP state
-           (reduces false positives from song lyrics)
-        3. Detects scripture references
-        4. Looks up verse text
-        5. Sends each one to the display engine
+        2. If WORSHIP: runs lyric detection (log-only for now, no display yet)
+        3. If not WORSHIP: runs scripture detection -> lookup -> display
         """
         # --- Service State tracking ---
         previous_state = self.state_machine.get_current_state()
@@ -37,11 +37,18 @@ class ScribePipeline:
         else:
             print(f"[STATE] No change (still {current_state.value})")
 
-        # --- Scripture detection (gated by service state) ---
+        # --- WORSHIP: lyric detection only ---
         if current_state == ServiceState.WORSHIP:
-            print("[GATED] Skipping scripture detection — currently in WORSHIP state.")
+            match = self.lyric_detector.detect(text)
+            if match:
+                print(f"[LYRIC] Detected '{match['song_title']}' "
+                      f"(line {match['line_number']}, score {match['score']}): "
+                      f"\"{match['line_text']}\"")
+            else:
+                print("[LYRIC] No confident song match.")
             return
 
+        # --- Non-WORSHIP: scripture detection (unchanged) ---
         references = detect_scripture_references(text)
 
         if not references:
@@ -76,12 +83,13 @@ class ScribePipeline:
 
 
 if __name__ == "__main__":
-    # Simulates a live transcript arriving in sequential chunks,
-    # the way Whisper would actually feed the pipeline during a real service.
-    # Note: worship line includes a fake scripture-like phrase to prove gating works.
+    # Simulates a live transcript arriving in sequential chunks.
+    # Worship section now includes an actual synthetic song line
+    # (from Mighty God Reigns) to prove lyric detection fires correctly.
     test_chunks = [
         "Alright church, let's stand and worship the Lord together.",
-        "This song says Psalm 100:1 make a joyful noise, sing along with me.",
+        "You are mighty, You are holy",
+        "Seated high above it all",
         "Turn with me to John 3:16, which tells us about God's love.",
         "The Bible says in Philippians 4:13 that I can do all things.",
         "Let's pray together before we continue.",
