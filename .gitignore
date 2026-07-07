@@ -41,3 +41,6 @@ cookies.txt
 build/
 dist/
 *.spec
+
+# Whisper model files (large binaries — distributed separately, not via Git)
+models/

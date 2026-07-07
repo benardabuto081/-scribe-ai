@@ -7,8 +7,10 @@ import numpy as np
 import queue
 import threading
 from faster_whisper import WhisperModel
+from engine.paths import get_base_dir
+import os
 
-LOCAL_MODEL_PATH = r"C:\Models\faster-whisper-small"
+LOCAL_MODEL_PATH = os.path.join(get_base_dir(), "models", "faster-whisper-small")
 
 
 class AudioEngine:
