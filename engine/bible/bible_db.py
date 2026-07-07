@@ -5,7 +5,9 @@
 import sqlite3
 import os
 
-DB_PATH = "data/bible.db"
+from engine.paths import get_data_path
+
+DB_PATH = get_data_path("bible.db")
 
 # Canonical book name resolver — maps abbreviations to full names in the database
 BOOK_NAME_MAP = {

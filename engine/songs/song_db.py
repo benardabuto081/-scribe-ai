@@ -9,7 +9,9 @@ touches SQL directly.
 import os
 import sqlite3
 
-DB_PATH = os.path.join("data", "songs.db")
+from engine.paths import get_data_path
+
+DB_PATH = get_data_path("songs.db")
 
 
 def get_all_song_lines():

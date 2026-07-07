@@ -36,3 +36,8 @@ results/*.json
 
 # Credentials / session data
 cookies.txt
+
+# PyInstaller build artifacts (regenerable, should never be committed)
+build/
+dist/
+*.spec
