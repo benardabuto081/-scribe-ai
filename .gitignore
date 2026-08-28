@@ -44,3 +44,6 @@ dist/
 
 # Whisper model files (large binaries — distributed separately, not via Git)
 models/
+
+# Distribution output (regenerable from source + build steps)
+release/
