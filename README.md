@@ -2,7 +2,9 @@
 
 **An engineering project exploring autonomous, offline-first church production intelligence - starting with real-time scripture and lyric detection from live speech.**
 
-`Python 3.x` | `Faster-Whisper` | `SQLite` | `Tkinter` | `Status: Active R&D - Core Intelligence Loop`
+![status](https://img.shields.io/badge/status-active%20R%26D-yellow) ![python](https://img.shields.io/badge/python-3.x-blue) ![faster--whisper](https://img.shields.io/badge/Faster--Whisper-local%20ASR-blueviolet) ![sqlite](https://img.shields.io/badge/SQLite-offline%20db-lightgrey) ![tkinter](https://img.shields.io/badge/Tkinter-UI-orange)
+
+> **Project Principle:** *If the internet disappears, the service continues.*
 
 ---
 
