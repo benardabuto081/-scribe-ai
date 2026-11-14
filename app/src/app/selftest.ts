@@ -1,18 +1,18 @@
 import { invokeChecked, isTauri } from '@/outputs/tauri';
 import { useOutputs } from '@/outputs/windows';
 import { useAudit } from '@/commands/audit';
-import { useLive } from '@/state/live';
 import { useUi } from '@/state/ui';
+import { execute } from '@/commands';
 
 /**
  * End-to-end startup self-check (desktop only), enabled with `SCRIBE_SELFTEST=1`:
  *
- *   F. Fresh profile: clear stored state, reload → splash → sign-in → Local Mode → every wizard
+ *   F. Isolated fresh profile (Rust, %TEMP%; never the real one) → splash → sign-in → Local Mode → every wizard
  *      step (Next / Skip) → Finish → app shell.
  *   0. The Studio window fits its monitor's work area and the bottom strip is visible.
  *   1. Ctrl+K palette: type "screens" → the top result must be "Go to → Screens"; Enter navigates.
  *   2. Click the real "Open" button on the Audience card → the Audience window must open and ack.
- *   3. Ctrl+K palette: "Amazing Grace" → Enter loads the song; Arrow Right takes slide 1.
+ *   3. Live Control: AI panel Approve → Program shows John 3:16; plan item → Preview → Take → Program.
  *   4. The Audience window must report it *rendered* "Amazing grace…".
  *   5. Rust closes the Studio and probes: the Audience must still show the slide.
  *
@@ -71,8 +71,6 @@ async function paletteRun(query: string, expectTop: RegExp) {
   pressKey(input, 'Enter');
 }
 
-const FRESH_FLAG = 'scribe-selftest-fresh';
-
 function selftestButton(id: string) {
   return document.querySelector<HTMLButtonElement>(`[data-selftest="${id}"]`);
 }
@@ -102,17 +100,15 @@ export async function runSelfTestIfEnabled(): Promise<void> {
   const enabled = await invokeChecked<boolean>('selftest_enabled').catch(() => false);
   if (!enabled) return;
   try {
-    // F. Fresh start: wipe this app's stored state once per self-test run, then reload.
-    if (!sessionStorage.getItem(FRESH_FLAG)) {
-      Object.keys(localStorage)
-        .filter((k) => k.startsWith('scribe.'))
-        .forEach((k) => localStorage.removeItem(k));
-      sessionStorage.setItem(FRESH_FLAG, '1');
-      await report('fresh start: cleared stored session, license, wizard and settings; reloading');
-      location.hash = '#/splash';
-      location.reload();
-      return;
-    }
+    // F. Fresh profile by isolation, never by wiping: Rust gives this run its own WebView2 profile
+    // under %TEMP%. Refuse to continue unless that is true and the profile is empty.
+    const profile = await invokeChecked<string | null>('selftest_profile');
+    if (!profile) throw new Error('refusing to run: no isolated self-test profile');
+    const existing = Object.keys(localStorage).filter(
+      (k) => k.startsWith('scribe.') && k !== 'scribe.settings',
+    );
+    if (existing.length > 0) throw new Error(`isolated profile is not empty: ${existing.join(', ')}`);
+    await report(`isolated profile in use (real profile untouched): ${profile}`);
     // Surface page errors in the log (an exception must never look like a silent no-op).
     window.addEventListener('error', (e) => void report(`page error: ${e.message}`));
     window.addEventListener('hashchange', () => void report(`→ ${location.hash}`));
@@ -176,14 +172,9 @@ export async function runSelfTestIfEnabled(): Promise<void> {
       outer: number[];
       workArea: number[];
     };
-    let fit = await invokeChecked<Fit>('studio_window_fit');
-    if (fit.minimized) {
-      // Someone minimized the window during the run: restore + re-fit, then measure for real.
-      await report('studio window was minimized; restoring and re-fitting');
-      await invokeChecked('studio_window_refit');
-      await sleep(500);
-      fit = await invokeChecked<Fit>('studio_window_fit');
-    }
+    const fit = await invokeChecked<Fit>('studio_window_fit');
+    if (fit.minimized)
+      throw new Error('studio window is minimized (see "studio window resized" lines for when)');
     await report(
       `studio window outer=${fit.outer.join(',')} workArea=${fit.workArea.join(',')} scale=${fit.scale} maximized=${fit.maximized}`,
     );
@@ -209,15 +200,44 @@ export async function runSelfTestIfEnabled(): Promise<void> {
     await waitFor('first ack from Audience', () => useOutputs.getState().acks.audience);
     await report(`audience window opened and acknowledged in ${Math.round(performance.now() - t0)} ms`);
 
-    // 3. Load a song from the palette, take slide 1 with the keyboard.
-    await paletteRun('Amazing Grace', /Amazing Grace/);
-    await waitFor('song to load', () => useLive.getState().activePresentationId === 'p-amazing-grace');
-    (document.activeElement as HTMLElement | null)?.blur();
-    pressKey(window, 'ArrowRight');
-    await waitFor('slide on program', () =>
-      useLive.getState().program.slide?.text.startsWith('Amazing grace'),
+    // 3. Live Control (C1): open it from the palette.
+    await paletteRun('live', /Live/);
+    await waitFor('Live Control to render', () => document.querySelector('[data-monitor="program"]'));
+    const monitorText = (m: 'preview' | 'program') =>
+      document
+        .querySelector(`[data-monitor="${m}"] .sa-tr-layer:not(.sa-tr-out) [data-slide-text]`)
+        ?.textContent?.trim() ?? '';
+
+    // 3a. AI panel Approve button (same command path as keyboard / palette).
+    await execute(
+      'ai.propose',
+      {
+        kind: 'scripture',
+        heard: 'turn with me to John chapter three verse sixteen',
+        decision: 'Show John 3:16 (KJV)',
+        why: 'self-test proposal',
+        confidence: 0.9,
+        commandId: 'scripture.show',
+        args: { reference: 'John 3:16' },
+      },
+      { source: 'ai', confidence: 0.9 },
     );
-    await report('song loaded via palette; slide 1 taken via keyboard (→)');
+    await clickSelftest('ai-approve');
+    await waitFor('Program monitor to show John 3:16', () =>
+      monitorText('program').startsWith('For God so loved'),
+    );
+    await report('AI panel: proposal approved → Program monitor shows John 3:16');
+
+    // 3b. Plan item → Preview monitor → Take → Program monitor.
+    await clickSelftest('plan-item-pi-7');
+    await waitFor('Preview monitor to show Amazing Grace', () =>
+      monitorText('preview').startsWith('Amazing grace'),
+    );
+    await clickSelftest('take');
+    await waitFor('Program monitor to show Amazing Grace', () =>
+      monitorText('program').startsWith('Amazing grace'),
+    );
+    await report('plan item → Preview → Take → Program monitor shows "Amazing grace"');
 
     // 4. The audience must have rendered it.
     const ack = await waitFor('audience to render the slide', () => {

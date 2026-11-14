@@ -145,7 +145,70 @@
     "custom": "Custom"
   },
   "live": {
-    "take": "Take"
+    "take": "Take",
+    "plan": "Service plan",
+    "choosePlan": "Choose a plan",
+    "noPlanTitle": "No service plan",
+    "noPlanBody": "Create one in Planner, or use quick search below.",
+    "emptyPlanTitle": "This plan is empty",
+    "emptyPlanBody": "Add songs and scripture in Planner.",
+    "quickSearch": "Quick search",
+    "quickSearchPlaceholder": "Song title, lyric, or any reference (Jn 3:16)",
+    "loadScripture": "Load {{ref}}",
+    "preview": "Preview",
+    "program": "Program",
+    "prev": "Previous",
+    "next": "Next",
+    "clearText": "Clear text",
+    "clearAll": "Clear all",
+    "clearLayer": "Clear layer…",
+    "layers": {
+      "background": "Background",
+      "media": "Media",
+      "props": "Props",
+      "messages": "Messages",
+      "audio": "Audio"
+    },
+    "nothingLoaded": "Nothing loaded",
+    "slideCount_one": "{{count}} slide",
+    "slideCount_other": "{{count}} slides",
+    "gridHint": "Click: on air · Alt+click: preview · 1–9: on air",
+    "slides": "Slides",
+    "blankSlide": "Blank slide",
+    "emptyTitle": "Pick something to show",
+    "emptyBody": "Choose an item from the service plan or search for a song or scripture.",
+    "ai": {
+      "title": "AI assistant",
+      "engineOn": "Engine on",
+      "engineOff": "Engine off",
+      "simulate": "Simulate AI",
+      "simulateHint": "Plays a scripted service through the real controls. Not the real engine.",
+      "suggestions": "Suggestions",
+      "noSuggestions": "No suggestions right now.",
+      "manualHint": "Manual mode: the AI listens but does not suggest.",
+      "recent": "Recent",
+      "transcript": "Transcript",
+      "listening": "Listening…",
+      "noTranscript": "The live transcript appears here when the AI engine is running.",
+      "approve": "Approve",
+      "dismiss": "Dismiss",
+      "show": "Show",
+      "manual": "Show any scripture",
+      "manualPlaceholder": "e.g. Yohana 3:16, Ps 23",
+      "kinds": {
+        "scripture": "Scripture",
+        "lyric": "Lyrics",
+        "state": "Service state",
+        "command": "Action"
+      },
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "dismissed": "Dismissed",
+        "auto": "Auto",
+        "failed": "Failed"
+      }
+    }
   },
   "palette": {
     "title": "Command palette",
@@ -664,5 +727,15 @@
       "communion": "Communion",
       "baptism": "Baptism"
     }
+  },
+  "transitions": {
+    "cut": "Cut",
+    "fade": "Fade",
+    "dissolve": "Dissolve",
+    "push": "Push",
+    "slide": "Slide",
+    "wipe": "Wipe",
+    "zoom": "Zoom",
+    "blur": "Blur"
   }
 }

@@ -145,7 +145,70 @@
     "custom": "Maalum"
   },
   "live": {
-    "take": "Onyesha"
+    "take": "Onyesha",
+    "plan": "Mpango wa ibada",
+    "choosePlan": "Chagua mpango",
+    "noPlanTitle": "Hakuna mpango wa ibada",
+    "noPlanBody": "Unda mmoja kwenye Mpangaji, au tumia utafutaji wa haraka hapa chini.",
+    "emptyPlanTitle": "Mpango huu hauna vitu",
+    "emptyPlanBody": "Ongeza nyimbo na maandiko kwenye Mpangaji.",
+    "quickSearch": "Utafutaji wa haraka",
+    "quickSearchPlaceholder": "Jina la wimbo, maneno, au rejea yoyote (Yn 3:16)",
+    "loadScripture": "Pakia {{ref}}",
+    "preview": "Hakikisho",
+    "program": "Hewani",
+    "prev": "Iliyotangulia",
+    "next": "Inayofuata",
+    "clearText": "Futa maandishi",
+    "clearAll": "Futa yote",
+    "clearLayer": "Futa tabaka…",
+    "layers": {
+      "background": "Mandharinyuma",
+      "media": "Picha/video",
+      "props": "Vipambo",
+      "messages": "Ujumbe",
+      "audio": "Sauti"
+    },
+    "nothingLoaded": "Hakuna kilichopakiwa",
+    "slideCount_one": "Slaidi {{count}}",
+    "slideCount_other": "Slaidi {{count}}",
+    "gridHint": "Bofya: hewani · Alt+bofya: hakikisho · 1–9: hewani",
+    "slides": "Slaidi",
+    "blankSlide": "Slaidi tupu",
+    "emptyTitle": "Chagua kitu cha kuonyesha",
+    "emptyBody": "Chagua kipengele kwenye mpango wa ibada au tafuta wimbo au andiko.",
+    "ai": {
+      "title": "Msaidizi wa AI",
+      "engineOn": "Injini iko hai",
+      "engineOff": "Injini imezimwa",
+      "simulate": "Iga AI",
+      "simulateHint": "Huendesha ibada ya mfano kupitia vidhibiti halisi. Si injini halisi.",
+      "suggestions": "Mapendekezo",
+      "noSuggestions": "Hakuna mapendekezo kwa sasa.",
+      "manualHint": "Hali ya mkono: AI husikiliza lakini haipendekezi.",
+      "recent": "Ya karibuni",
+      "transcript": "Nakala ya maneno",
+      "listening": "Inasikiliza…",
+      "noTranscript": "Nakala ya moja kwa moja itaonekana hapa injini ya AI ikiendeshwa.",
+      "approve": "Kubali",
+      "dismiss": "Kataa",
+      "show": "Onyesha",
+      "manual": "Onyesha andiko lolote",
+      "manualPlaceholder": "k.m. Yohana 3:16, Zab 23",
+      "kinds": {
+        "scripture": "Andiko",
+        "lyric": "Maneno ya wimbo",
+        "state": "Hali ya ibada",
+        "command": "Kitendo"
+      },
+      "status": {
+        "pending": "Inasubiri",
+        "approved": "Imekubaliwa",
+        "dismissed": "Imekataliwa",
+        "auto": "Otomatiki",
+        "failed": "Imeshindwa"
+      }
+    }
   },
   "palette": {
     "title": "Orodha ya amri",
@@ -664,5 +727,15 @@
       "communion": "Meza ya Bwana",
       "baptism": "Ubatizo"
     }
+  },
+  "transitions": {
+    "cut": "Kata",
+    "fade": "Fifia",
+    "dissolve": "Yeyusha",
+    "push": "Sukuma",
+    "slide": "Teleza",
+    "wipe": "Futa",
+    "zoom": "Kuza",
+    "blur": "Ukungu"
   }
 }

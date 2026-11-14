@@ -16,12 +16,14 @@ import { ModulePlaceholder } from './ModulePlaceholder';
 import { NAV_ITEMS, SEARCH_ITEM } from './nav';
 import { StyleGuide } from '@/design-system/styleguide/StyleGuide';
 import { ScreensPage } from '@/features/screens/ScreensPage';
+import { LivePage } from '@/features/live/LivePage';
 import { OutputView } from '@/outputs/OutputView';
 import { OUTPUT_ROLES, type OutputRole } from '@/outputs/types';
 
 /** Implemented module screens by nav id. Anything missing renders a visible "Coming soon" screen. */
 const PAGES: Partial<Record<string, ReactNode>> = {
   screens: <ScreensPage />,
+  live: <LivePage />,
 };
 
 /** Studio screens need a session and a finished first-run wizard. */

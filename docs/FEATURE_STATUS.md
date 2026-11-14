@@ -9,7 +9,7 @@ Honest status of every feature in `docs/SPEC.md` sections 4 and 5.
 | `partial` | Some real behavior works (listed in Notes); the rest is mock. |
 | `done` | Meets the Definition of Done in `CLAUDE.md`. |
 
-Last updated: Phase A, Step 5.
+Last updated: Phase A, Step 6 (C1 Live Control).
 
 ## Temporary items (must be replaced)
 
@@ -53,7 +53,7 @@ Last updated: Phase A, Step 5.
 | 4.2 | Library | none | |
 | 4.3 | Presentation editor | none | |
 | 4.4 | Playlists / Planner | none | |
-| 4.5 | Live Control | none | |
+| 4.5 | Live Control | partial | Three resizable panes (layout saved). Plan queue + quick search (songs, any scripture reference). Preview and Program monitors use the real audience renderer. Take / Next / Previous / Clear / Clear all / Blackout / Logo, transition picker, per-layer clear, numbered slide grid with group colors, 1-9 keys. AI panel: suggestions with confidence + explanation, Approve / Dismiss, mode, Pause, Undo last AI action, manual scripture box. Quick-bar: timers, props, messages, macros. AI feed is a visible Simulate AI switch (scripted) until the engine connects (Phase C). Data is mock (no persistence). |
 | 4.6 | Looks, Themes, Templates | none | |
 | 4.7 | Props | none | |
 | 4.8 | Messages | none | |
