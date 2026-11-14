@@ -4,6 +4,7 @@ import type { LucideIcon } from 'lucide-react';
 import { CornerDownLeft, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '../primitives/Icon';
+import { paletteScore } from './paletteScore';
 import { Kbd } from '../primitives/Kbd';
 
 export type PaletteItem = {
@@ -15,6 +16,8 @@ export type PaletteItem = {
   keywords?: string[];
   hint?: string;
   disabled?: boolean;
+  /** Small ranking bonus within a match tier (e.g. navigation targets). */
+  boost?: number;
 };
 
 /** Presentational command palette. The app wires it to the Command Bus. */
@@ -33,6 +36,12 @@ export function CommandPalette({
 }) {
   const { t } = useTranslation();
   const groups = [...new Set(items.map((i) => i.group))];
+  const byId = new Map(items.map((i) => [i.id, i]));
+  // Rank on the human label (and explicit keywords), never on internal ids: see paletteScore.ts.
+  const filter = (value: string, search: string) => {
+    const item = byId.get(value);
+    return item ? paletteScore(item.label, search, item.keywords, item.boost) : 0;
+  };
   return (
     <RD.Root open={open} onOpenChange={onOpenChange}>
       <RD.Portal>
@@ -40,7 +49,7 @@ export function CommandPalette({
         <RD.Content className="animate-scale-in fixed top-[14vh] left-1/2 z-50 w-[min(640px,calc(100vw-2rem))] -translate-x-1/2 overflow-hidden rounded-xl border border-line-strong bg-surface-2 shadow-3 outline-none">
           <RD.Title className="sr-only">{t('palette.title')}</RD.Title>
           <RD.Description className="sr-only">{t('palette.description')}</RD.Description>
-          <Command label={t('palette.title')} loop>
+          <Command label={t('palette.title')} loop filter={filter}>
             <div className="flex items-center gap-3 border-b border-line px-4">
               <Icon icon={Search} size={18} className="text-fg-subtle" />
               <Command.Input
@@ -65,8 +74,7 @@ export function CommandPalette({
                     .map((i) => (
                       <Command.Item
                         key={i.id}
-                        value={`${i.label} ${i.id}`}
-                        keywords={i.keywords}
+                        value={i.id}
                         disabled={i.disabled}
                         onSelect={() => onRun(i.id)}
                         className="group flex h-10 cursor-pointer items-center gap-3 rounded-md px-3 text-sm text-fg data-[disabled=true]:opacity-40 data-[selected=true]:bg-accent-soft"
