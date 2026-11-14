@@ -40,6 +40,8 @@ function initialProgram(): OutputState {
   const theme = look ? themes.find((t) => t.id === look.themeId) : undefined;
   return {
     ...EMPTY_OUTPUT_STATE,
+    // Seeded from the clock so versions keep increasing across Studio reloads (outputs drop stale snapshots).
+    version: Date.now(),
     background: bg ? { id: bg.id, css: bg.css } : null,
     theme: theme ? themeStyle(theme) : EMPTY_OUTPUT_STATE.theme,
     look: look ? { id: look.id, name: look.name, layers: look.layers } : EMPTY_OUTPUT_STATE.look,

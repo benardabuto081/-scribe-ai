@@ -9,7 +9,7 @@ Honest status of every feature in `docs/SPEC.md` sections 4 and 5.
 | `partial` | Some real behavior works (listed in Notes); the rest is mock. |
 | `done` | Meets the Definition of Done in `CLAUDE.md`. |
 
-Last updated: Phase A, Step 1.
+Last updated: Phase A, Step 4.
 
 ## Temporary items (must be replaced)
 
@@ -22,13 +22,13 @@ Last updated: Phase A, Step 1.
 
 | Feature | Status | Notes |
 |---|---|---|
-| Scaffold (Tauri 2, React 18, TS strict, Vite, Tailwind 4, Zustand, Router, zod, Vitest, ESLint, Prettier) | partial | Web layer builds and tests; Rust shell pending toolchain install. |
-| Bundled fonts (Inter, Montserrat — OFL) | done | Via `@fontsource-variable/*`, bundled into the app at build time. No CDN. |
-| i18n (English, Kiswahili) | partial | Catalog parity test in place; strings added as screens land. |
-| Design system (§1) | none | Step 2. |
-| Command Bus, registry, audit log | none | Step 3. |
-| Studio shell and status bar (§2) | none | Step 4. |
-| Output windows (Audience, Stage) | none | Step 4. |
+| Scaffold (Tauri 2, React 18, TS strict, Vite, Tailwind 4, Zustand, Router, zod, Vitest, ESLint, Prettier) | done | Web and Rust layers build; Rust 1.100 (MSVC). |
+| Bundled fonts (Inter, Montserrat — OFL) | done | Latin + Latin-ext woff2 vendored in `app/src/assets/fonts/` with OFL licenses. No CDN. |
+| i18n (English, Kiswahili) | partial | Catalog parity test; every command has en+sw labels. Kiswahili copy needs native-speaker review. |
+| Design system (§1) | done | Tokens from logo, dark/light/high-contrast, comfortable/compact, all §1 components, living style guide at `#/design-system`. |
+| Command Bus, registry, audit log | partial | 58 typed commands, zod args, undo, permissions, AI gate, keyboard + Ctrl+K palette. Audit log is in-memory (persists in Phase B). |
+| Studio shell and status bar (§2) | partial | Left rail (all modules), status bar (service state, AI mode/confidence/pause, mic meter, online, engine, LIVE, look, clock), bottom strip. Mic meter shows only when the engine is connected. |
+| Output windows (Audience, Stage) | partial | Separate Tauri windows with own WebView2 process; state in Rust (ADR 0001); transitions, props, messages, timers, blackout, logo, test pattern, identify. Edge blending / LED tiling not started. |
 | Engine sidecar connection | none | Step 7. |
 
 ## Section 3 — Authentication and onboarding
@@ -65,14 +65,14 @@ Last updated: Phase A, Step 1.
 | 4.16 | Scripture | none | |
 | 4.17 | Songs | none | |
 | 4.18 | Stage display | none | |
-| 4.19 | Screens and Outputs | none | |
+| 4.19 | Screens and Outputs | partial | Real display detection (Tauri monitor API), assign Audience/Stage, open/close, test pattern, identify. No edge blending, LED tiling, rotation or safe-area guides yet. |
 | 4.20 | Director | none | |
 | 4.21 | Remote control and API | none | |
 | 4.22 | AI Brain | none | |
 | 4.23 | Post-Service | none | |
 | 4.24 | Analytics and Reports | none | |
 | 4.25 | Team and Permissions | none | |
-| 4.26 | Search | none | |
+| 4.26 | Search | partial | Ctrl+K palette searches commands, screens, songs, looks, macros, playlists. Search screen itself is Coming soon. |
 | 4.27 | Settings | none | |
 | 4.28 | Help | none | |
 

@@ -95,3 +95,34 @@ export async function setOutputAssignment(role: OutputRole, monitor: string | nu
     await invoke('output_open', { role, monitor });
   }
 }
+
+/**
+ * Keeps `useOutputs().open` truthful when an output window is closed by the user or OS.
+ * Tauri: Rust emits `output://window` on open/destroy. Browser: polls the popup handles.
+ */
+export function installOutputWindowTracking(): () => void {
+  if (isTauri()) {
+    let unlisten: (() => void) | null = null;
+    let disposed = false;
+    void import('@tauri-apps/api/event').then(async ({ listen }) => {
+      unlisten = await listen<{ role: OutputRole; open: boolean }>('output://window', (e) =>
+        useOutputs.getState().setOpen(e.payload.role, e.payload.open),
+      );
+      if (disposed) unlisten();
+    });
+    return () => {
+      disposed = true;
+      unlisten?.();
+    };
+  }
+  const id = window.setInterval(() => {
+    (Object.keys(browserWindows) as OutputRole[]).forEach((role) => {
+      const w = browserWindows[role];
+      if (w && w.closed) {
+        browserWindows[role] = null;
+        useOutputs.getState().setOpen(role, false);
+      }
+    });
+  }, 1000);
+  return () => window.clearInterval(id);
+}

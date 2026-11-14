@@ -84,6 +84,24 @@
       "connected": "Injini imeunganishwa",
       "starting": "Injini inaanza",
       "down": "Injini imezimika"
+    },
+    "serviceState": "Hali ya ibada",
+    "aiConfidence": "Uhakika wa pendekezo la mwisho la AI",
+    "pause": "Simamisha AI",
+    "aiPaused": "AI imesimamishwa",
+    "aiUnavailable": "AI haipo mtandaoni",
+    "micUnavailable": "Kiwango cha kipaza sauti kitaonekana injini ya AI ikiunganishwa",
+    "offline": "Nje ya mtandao",
+    "blackout": "GIZA",
+    "offAir": "Haipo hewani",
+    "activeLook": "Mwonekano unaotumika",
+    "mock": "Mfano",
+    "partial": "Sehemu",
+    "done": "Imekamilika",
+    "engineShort": {
+      "connected": "Injini",
+      "starting": "Inaanza",
+      "down": "Injini imezimika"
     }
   },
   "ai": {
@@ -317,5 +335,59 @@
       "testPattern": "Mchoro wa majaribio (washa/zima)",
       "identify": "Tambua skrini"
     }
+  },
+  "shell": {
+    "mainNav": "Urambazaji mkuu",
+    "statusBar": "Upau wa hali",
+    "searchOrCommand": "Tafuta au endesha amri…",
+    "audience": "Hadhira",
+    "stage": "Jukwaa",
+    "audienceOutput": "Dirisha la hadhira",
+    "stageOutput": "Dirisha la jukwaa",
+    "open": "wazi",
+    "closed": "imefungwa",
+    "lastCommand": "Mwisho:",
+    "specRef": "SPEC §{{spec}}"
+  },
+  "service": {
+    "states": {
+      "preService": "Kabla ya ibada",
+      "worship": "Kuabudu",
+      "sermon": "Mahubiri",
+      "prayer": "Maombi",
+      "announcements": "Matangazo"
+    }
+  },
+  "sources": {
+    "ui": "Kubofya",
+    "keyboard": "Kibodi",
+    "midi": "MIDI",
+    "remote": "Rimoti",
+    "macro": "Makro",
+    "ai": "AI"
+  },
+  "stage": {
+    "current": "Sasa",
+    "next": "Ifuatayo",
+    "noTimers": "Hakuna saa inayohesabu",
+    "audienceBlack": "Skrini ya hadhira iko GIZANI",
+    "audienceLogo": "Skrini ya hadhira inaonyesha NEMBO"
+  },
+  "screens": {
+    "subtitle": "Tambua skrini na upange matokeo ya Hadhira na Jukwaa",
+    "detect": "Tambua skrini",
+    "arrangement": "Mpangilio wa skrini",
+    "arrangementSub": "Kama ilivyoripotiwa na Windows",
+    "noneTitle": "Hakuna skrini iliyotambuliwa",
+    "noneBody": "Unganisha projekta au TV, kisha bonyeza Tambua skrini.",
+    "primary": "Kuu",
+    "display": "Skrini",
+    "windowed": "Dirisha kwenye skrini hii (hakikisho)",
+    "open": "Fungua",
+    "close": "Funga",
+    "testPattern": "Mchoro wa majaribio",
+    "browserNote": "Inaendeshwa kwenye kivinjari: matokeo hufunguka kama madirisha ibukizi. Kupanga skrini kunahitaji programu ya kompyuta.",
+    "isolationTitle": "Utengaji wa matokeo",
+    "isolationBody": "Madirisha ya matokeo huendeshwa kwenye mchakato wake wa kivinjari na huendelea kuonyesha hali ya mwisho hata dirisha la Studio likifungwa au kukwama. Bonyeza Ctrl+Shift+S kwenye dirisha la matokeo kufungua Studio tena."
   }
 }
