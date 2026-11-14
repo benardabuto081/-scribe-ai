@@ -364,7 +364,8 @@
     "midi": "MIDI",
     "remote": "Remote",
     "macro": "Macro",
-    "ai": "AI"
+    "ai": "AI",
+    "system": "System"
   },
   "stage": {
     "current": "Now",
@@ -389,5 +390,13 @@
     "browserNote": "Running in a browser: outputs open as popup windows. Display assignment needs the desktop app.",
     "isolationTitle": "Output isolation",
     "isolationBody": "Output windows run in their own browser process and keep showing the last state if the Studio window is closed or frozen. Press Ctrl+Shift+S on an output to reopen the Studio."
+  },
+  "errors": {
+    "commandFailed": "{{command}} failed",
+    "outputSync": "Output windows did not receive the latest state"
+  },
+  "bible": {
+    "sampleOnlyTitle": "Bible database not connected",
+    "sampleOnlyBody": "Showing built-in sample verses only"
   }
 }

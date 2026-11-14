@@ -26,9 +26,10 @@ audience screen down with it in the middle of a service.
 4. **Process isolation.** Output windows are created with their own WebView2 data directory
    (`<app-local-data>/webview-outputs`). WebView2 runs a separate browser process (and renderer)
    for a different user-data folder, so a hung Studio renderer cannot freeze the audience screen.
-5. **Snapshots, not deltas.** Every update is a full, versioned snapshot. Versions are seeded from
-   the clock (`Date.now()`) and only increase, so outputs safely drop stale or duplicate messages,
-   including after a Studio restart.
+5. **Snapshots, not deltas, ordered without the wall clock.** Every update is a full snapshot.
+   Rust stamps each one with a process-wide monotonic counter (`output_state::stamp`), ignoring any
+   version the Studio sent, so ordering survives Studio reloads and clock changes. The browser
+   transport carries a per-run `session` id instead; outputs reset ordering when it changes.
 6. **Time is computed locally.** Clocks and timers carry `startedAt` and `accumulatedMs`. Each output
    computes the display value itself (`outputs/timerText.ts`), so countdowns keep running with no
    Studio at all.
@@ -38,6 +39,12 @@ audience screen down with it in the middle of a service.
 
 Browser dev mode uses the same contract through `BroadcastChannel` plus a `localStorage` snapshot
 (`outputs/bridge.ts`), so the same code paths are exercised in tests.
+
+8. **Window-creating commands are `async`.** On Windows, building a webview window inside a
+   synchronous Tauri command blocks the main thread waiting on WebView2 and never completes.
+   `output_open`, `output_close`, `studio_reopen` and `list_monitors` are therefore `async`.
+   Every native call from the UI goes through `invokeChecked` (`outputs/tauri.ts`), which times out
+   after 8 s so a hang becomes a visible error (toast and audit log entry) instead of silence.
 
 ## Consequences
 
@@ -52,6 +59,10 @@ Browser dev mode uses the same contract through `BroadcastChannel` plus a `local
 
 - Automated: `src/outputs/OutputView.test.tsx` renders outputs from a published snapshot with no
   Studio mounted, and checks stale-version rejection and per-role test patterns.
+- End-to-end self-check: `SCRIBE_SELFTEST=1 npm run tauri dev` drives the real UI (palette →
+  Screens → Open Audience → load a song from the palette → → key), waits for the Audience window to
+  acknowledge the *rendered* slide text, then Rust closes the Studio, probes the Audience and
+  prints `[selftest] RESULT PASS|FAIL`.
 - Manual (desktop build): open Audience from Screens, take a slide, close the Studio window. The
   Audience keeps showing the slide and any running timer keeps counting. Press `Ctrl+Shift+S` on
   the output to bring the Studio back.

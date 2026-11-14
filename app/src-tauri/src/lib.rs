@@ -1,6 +1,7 @@
 use tauri::{Emitter, Manager};
 
 mod output_state;
+mod selftest;
 mod windows;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -10,6 +11,11 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             output_state::output_set_state,
             output_state::output_get_state,
+            output_state::output_ack,
+            selftest::selftest_enabled,
+            selftest::selftest_report,
+            selftest::selftest_fail,
+            selftest::selftest_close_studio_and_probe,
             windows::list_monitors,
             windows::output_open,
             windows::output_close,

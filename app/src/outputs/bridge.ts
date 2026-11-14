@@ -1,15 +1,18 @@
 import { EMPTY_OUTPUT_STATE, OutputStateSchema, type OutputState } from './types';
+import { invokeChecked, isTauri } from './tauri';
+
+export { isTauri };
 
 /**
  * Transport for program state between the Studio and output windows.
  *
- *  - In Tauri: Studio → `invoke('output_set_state')` → Rust stores the snapshot and emits
- *    `output://state` to all windows. Output windows fetch the snapshot on load with
- *    `invoke('output_get_state')`, so they recover even if they (re)open while the Studio is gone.
- *  - In a plain browser (dev / tests): BroadcastChannel + localStorage snapshot, same semantics.
+ *  - In Tauri: Studio → `output_set_state` → Rust assigns a monotonic version, stores the snapshot
+ *    and emits `output://state` to all windows. Output windows fetch the snapshot on load with
+ *    `output_get_state`, so they recover even if they (re)open while the Studio is gone.
+ *  - In a plain browser (dev / tests): BroadcastChannel + localStorage snapshot. Ordering uses the
+ *    Studio's per-session counter; a new Studio session (new `session` id) resets tracking.
+ * Neither path depends on the wall clock.
  */
-
-export const isTauri = (): boolean => typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
 
 const CHANNEL = 'scribe-output';
 const SNAPSHOT_KEY = 'scribe.output.snapshot';
@@ -23,8 +26,7 @@ function getChannel(): BroadcastChannel | null {
 
 export async function publishOutputState(state: OutputState): Promise<void> {
   if (isTauri()) {
-    const { invoke } = await import('@tauri-apps/api/core');
-    await invoke('output_set_state', { state });
+    await invokeChecked('output_set_state', { state });
     return;
   }
   try {
@@ -40,26 +42,38 @@ function parse(raw: unknown): OutputState | null {
   return r.success ? r.data : null;
 }
 
+/** Decides whether a snapshot is newer than the last one accepted. Exported for tests. */
+export function createOrderTracker() {
+  let session: string | null = null;
+  let version = -1;
+  return (s: Pick<OutputState, 'session' | 'version'>): boolean => {
+    if (s.session !== session) {
+      session = s.session;
+      version = s.version;
+      return true;
+    }
+    if (s.version <= version) return false;
+    version = s.version;
+    return true;
+  };
+}
+
 /** Subscribes to program state. Calls `cb` immediately with the latest snapshot. Returns unsubscribe. */
 export function subscribeOutputState(cb: (s: OutputState) => void): () => void {
   let disposed = false;
-  let latestVersion = -1;
+  const accept = createOrderTracker();
   const deliver = (raw: unknown) => {
     const s = parse(raw);
-    if (!s || disposed || s.version < latestVersion) return;
-    latestVersion = s.version;
+    if (!s || disposed || !accept(s)) return;
     cb(s);
   };
 
   if (isTauri()) {
     let unlisten: (() => void) | null = null;
     void (async () => {
-      const [{ invoke }, { listen }] = await Promise.all([
-        import('@tauri-apps/api/core'),
-        import('@tauri-apps/api/event'),
-      ]);
+      const { listen } = await import('@tauri-apps/api/event');
       unlisten = await listen<unknown>('output://state', (e) => deliver(e.payload));
-      const snap = await invoke<unknown>('output_get_state');
+      const snap = await invokeChecked<unknown>('output_get_state');
       if (snap) deliver(snap);
       if (disposed) unlisten();
     })();

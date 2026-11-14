@@ -42,7 +42,7 @@ fn monitor_name(m: &tauri::Monitor, index: usize) -> String {
 }
 
 #[tauri::command]
-pub fn list_monitors(app: AppHandle) -> Result<Vec<MonitorInfo>, String> {
+pub async fn list_monitors(app: AppHandle) -> Result<Vec<MonitorInfo>, String> {
     let primary = app
         .primary_monitor()
         .map_err(|e| e.to_string())?
@@ -68,8 +68,12 @@ pub fn list_monitors(app: AppHandle) -> Result<Vec<MonitorInfo>, String> {
 
 /// Opens (or moves) an output window. With a monitor it goes borderless fullscreen on that
 /// display; without one it opens as a resizable preview window on the current display.
+///
+/// Must be `async`: on Windows, building a webview window inside a synchronous command blocks
+/// the main thread waiting for WebView2, which never completes (Tauri docs; this was the cause of
+/// the "Open does nothing" bug). Async commands run off the main thread.
 #[tauri::command]
-pub fn output_open(app: AppHandle, role: String, monitor: Option<String>) -> Result<(), String> {
+pub async fn output_open(app: AppHandle, role: String, monitor: Option<String>) -> Result<(), String> {
     let label = label_for(&role)?;
 
     let target = match &monitor {
@@ -125,7 +129,7 @@ pub fn output_open(app: AppHandle, role: String, monitor: Option<String>) -> Res
 }
 
 #[tauri::command]
-pub fn output_close(app: AppHandle, role: String) -> Result<(), String> {
+pub async fn output_close(app: AppHandle, role: String) -> Result<(), String> {
     let label = label_for(&role)?;
     if let Some(w) = app.get_webview_window(&label) {
         w.close().map_err(|e| e.to_string())?;
@@ -134,8 +138,9 @@ pub fn output_close(app: AppHandle, role: String) -> Result<(), String> {
 }
 
 /// Recreates the Studio window if it was closed while outputs kept running.
+/// Async for the same reason as `output_open` (creates a webview window).
 #[tauri::command]
-pub fn studio_reopen(app: AppHandle) -> Result<(), String> {
+pub async fn studio_reopen(app: AppHandle) -> Result<(), String> {
     if let Some(w) = app.get_webview_window("studio") {
         w.show().map_err(|e| e.to_string())?;
         return w.set_focus().map_err(|e| e.to_string());

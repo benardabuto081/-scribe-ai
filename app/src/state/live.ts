@@ -33,6 +33,12 @@ export const useLive = create<LiveState>(() => ({
   program: initialProgram(),
 }));
 
+function newSessionId(): string {
+  return typeof crypto !== 'undefined' && 'randomUUID' in crypto
+    ? crypto.randomUUID()
+    : Math.random().toString(36).slice(2);
+}
+
 function initialProgram(): OutputState {
   const { looks, backgrounds, themes } = useLibrary.getState();
   const look = looks[0];
@@ -40,8 +46,10 @@ function initialProgram(): OutputState {
   const theme = look ? themes.find((t) => t.id === look.themeId) : undefined;
   return {
     ...EMPTY_OUTPUT_STATE,
-    // Seeded from the clock so versions keep increasing across Studio reloads (outputs drop stale snapshots).
-    version: Date.now(),
+    // Ordering never depends on the wall clock: Rust assigns versions in the desktop app, and the
+    // browser transport resets tracking whenever this per-run session id changes.
+    session: newSessionId(),
+    version: 0,
     background: bg ? { id: bg.id, css: bg.css } : null,
     theme: theme ? themeStyle(theme) : EMPTY_OUTPUT_STATE.theme,
     look: look ? { id: look.id, name: look.name, layers: look.layers } : EMPTY_OUTPUT_STATE.look,

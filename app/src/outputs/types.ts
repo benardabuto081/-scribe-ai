@@ -59,6 +59,9 @@ const TimerState = z.object({
 export type TimerState = z.infer<typeof TimerState>;
 
 export const OutputStateSchema = z.object({
+  /** Identifies one Studio run. A new session resets ordering in outputs (browser transport). */
+  session: z.string(),
+  /** Monotonic within a session; in Tauri it is assigned by Rust (never the wall clock). */
   version: z.number(),
   updatedAt: z.number(),
   slide: SlideContent.nullable(),
@@ -95,6 +98,7 @@ export const OUTPUT_ROLES = ['audience', 'stage'] as const;
 export type OutputRole = (typeof OUTPUT_ROLES)[number];
 
 export const EMPTY_OUTPUT_STATE: OutputState = {
+  session: '',
   version: 0,
   updatedAt: 0,
   slide: null,

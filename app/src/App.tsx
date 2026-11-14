@@ -7,6 +7,8 @@ import { installKeyboard } from '@/commands/keyboard';
 import { CommandPaletteHost } from '@/commands/CommandPaletteHost';
 import { createAppRouter } from '@/app/router';
 import { installOutputWindowTracking } from '@/outputs/windows';
+import { installCommandFeedback } from '@/commands/feedback';
+import { runSelfTestIfEnabled } from '@/app/selftest';
 
 // Apply persisted appearance before first paint, and register every command.
 applyAppearance(useSettings.getState());
@@ -19,6 +21,10 @@ setNavigator((path) => void router.navigate(path));
 export function App() {
   useEffect(() => installKeyboard(), []);
   useEffect(() => installOutputWindowTracking(), []);
+  useEffect(() => installCommandFeedback(), []);
+  useEffect(() => {
+    void runSelfTestIfEnabled();
+  }, []);
   return (
     <TooltipProvider delayDuration={350}>
       <RouterProvider router={router} />

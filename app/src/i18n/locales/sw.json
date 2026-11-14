@@ -364,7 +364,8 @@
     "midi": "MIDI",
     "remote": "Rimoti",
     "macro": "Makro",
-    "ai": "AI"
+    "ai": "AI",
+    "system": "Mfumo"
   },
   "stage": {
     "current": "Sasa",
@@ -389,5 +390,13 @@
     "browserNote": "Inaendeshwa kwenye kivinjari: matokeo hufunguka kama madirisha ibukizi. Kupanga skrini kunahitaji programu ya kompyuta.",
     "isolationTitle": "Utengaji wa matokeo",
     "isolationBody": "Madirisha ya matokeo huendeshwa kwenye mchakato wake wa kivinjari na huendelea kuonyesha hali ya mwisho hata dirisha la Studio likifungwa au kukwama. Bonyeza Ctrl+Shift+S kwenye dirisha la matokeo kufungua Studio tena."
+  },
+  "errors": {
+    "commandFailed": "{{command}} imeshindwa",
+    "outputSync": "Madirisha ya matokeo hayakupokea hali ya hivi punde"
+  },
+  "bible": {
+    "sampleOnlyTitle": "Hifadhidata ya Biblia haijaunganishwa",
+    "sampleOnlyBody": "Inaonyesha mistari ya mfano iliyojengwa ndani pekee"
   }
 }

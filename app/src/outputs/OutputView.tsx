@@ -2,6 +2,7 @@ import { memo, useEffect, useState, type CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import markUrl from '@/assets/brand/mark.png';
 import { subscribeOutputState, isTauri } from './bridge';
+import { invokeChecked } from './tauri';
 import { Transitioner } from './Transitioner';
 import { formatClock, readTimer } from './timerText';
 import {
@@ -39,18 +40,61 @@ function useOutputShortcuts() {
     if (!isTauri()) return;
     const onKey = async (e: KeyboardEvent) => {
       if (!(e.ctrlKey && e.shiftKey)) return;
-      const { invoke } = await import('@tauri-apps/api/core');
-      if (e.key.toLowerCase() === 's') await invoke('studio_reopen');
-      if (e.key.toLowerCase() === 'q') await invoke('app_quit');
+      const cmd =
+        e.key.toLowerCase() === 's' ? 'studio_reopen' : e.key.toLowerCase() === 'q' ? 'app_quit' : null;
+      if (!cmd) return;
+      // Never draw errors on an audience screen; log them for the diagnostics bundle instead.
+      await invokeChecked(cmd).catch((err: unknown) => console.error(err));
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 }
 
+/** Text actually rendered in the incoming (non-exiting) slide layer of this window. */
+function renderedSlideText(): string | null {
+  const el = document.querySelector('.sa-tr-layer:not(.sa-tr-out) [data-slide-text]');
+  return el?.textContent?.trim().slice(0, 200) || null;
+}
+
+/**
+ * After each render, tell Rust which version this window shows and what text is on screen
+ * (output health in the Studio, evidence for the self-test). Re-acks on `output://probe`.
+ */
+function useRenderAck(role: OutputRole, version: number) {
+  useEffect(() => {
+    if (!isTauri() || version === 0) return;
+    const id = requestAnimationFrame(() => {
+      void invokeChecked('output_ack', { ack: { role, version, rendered: renderedSlideText() } }).catch(
+        () => undefined, // Health reporting must never disturb rendering.
+      );
+    });
+    return () => cancelAnimationFrame(id);
+  }, [role, version]);
+
+  useEffect(() => {
+    if (!isTauri()) return;
+    let unlisten: (() => void) | null = null;
+    let disposed = false;
+    void import('@tauri-apps/api/event').then(async ({ listen }) => {
+      unlisten = await listen('output://probe', () => {
+        void invokeChecked('output_ack', { ack: { role, version, rendered: renderedSlideText() } }).catch(
+          () => undefined,
+        );
+      });
+      if (disposed) unlisten();
+    });
+    return () => {
+      disposed = true;
+      unlisten?.();
+    };
+  }, [role, version]);
+}
+
 export function OutputView({ role }: { role: OutputRole }) {
   const state = useOutputState();
   useOutputShortcuts();
+  useRenderAck(role, state.version);
   useEffect(() => {
     document.title = `Scribe AI — ${role === 'audience' ? 'Audience' : 'Stage'}`;
   }, [role]);
@@ -99,7 +143,9 @@ const SlideText = memo(function SlideText({ slide, theme }: { slide: SlideConten
   return (
     <div className="sa-layer flex flex-col" style={position}>
       <div style={panel}>
-        <p style={{ ...base, margin: 0 }}>{slide.text}</p>
+        <p data-slide-text style={{ ...base, margin: 0 }}>
+          {slide.text}
+        </p>
         {isScripture && slide.reference && (
           <p
             style={{
