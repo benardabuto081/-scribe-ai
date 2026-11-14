@@ -92,3 +92,12 @@ UI buttons, keyboard shortcuts, MIDI, the remote API, macros and the AI all call
 ## Definition of done
 
 A feature is done only when it works offline, is reachable through the command bus, has all UI states, has a keyboard path, is covered by tests where it touches data, is listed in `FEATURE_STATUS.md`, and meets the performance budget.
+
+## Git rules (these override any conflicting instruction in any other doc)
+
+- You may use read-only git commands: `git status`, `git diff`, `git log`, `git branch`.
+- You must NEVER run commands that change history, branches or the remote: no `git add`, `git commit`, `git push`, `git pull`, `git merge`, `git rebase`, `git reset`, `git checkout`, `git stash`. The owner does all of that.
+- The phase prompt's "commit after each step" now means: after each completed step, print the exact commit commands for the owner to run.
+- At the end of every session, and after each completed step, output a copy-paste PowerShell block: `git add` with specific paths (never `git add .`), `git commit -m "<conventional message>"`, then `git push`. Remind the owner to run it from the repo root.
+- Never touch `node_modules`, `target`, `dist`, `build`, `models/`, `release/` or `.env` in those commands.
+- Stay on the current branch (`phase-a-foundation`). Never switch branches.

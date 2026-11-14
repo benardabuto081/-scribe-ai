@@ -1,0 +1,321 @@
+{
+  "app": {
+    "name": "Scribe AI",
+    "tagline": "Intelligence for Ministry"
+  },
+  "ds": {
+    "close": "Close",
+    "loading": "Loading…",
+    "retry": "Try again",
+    "errorTitle": "Something went wrong",
+    "errorBody": "This part of Scribe AI could not load. Your service is not affected.",
+    "comingSoon": "Coming soon",
+    "plannedFor": "planned for Phase {{phase}}",
+    "soon": "Soon",
+    "angle": "Angle",
+    "stopColor": "Stop {{n}} color",
+    "stopPosition": "Stop {{n}} position",
+    "removeStop": "Remove stop",
+    "addStop": "Add stop",
+    "pressKeys": "Press keys…",
+    "noShortcut": "No shortcut"
+  },
+  "common": {
+    "new": "New",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "duplicate": "Duplicate",
+    "rename": "Rename",
+    "delete": "Delete",
+    "remove": "Remove",
+    "disabled": "Disabled",
+    "search": "Search",
+    "notifications": "Notifications",
+    "name": "Name",
+    "title": "Title",
+    "author": "Author",
+    "uses": "Uses"
+  },
+  "nav": {
+    "home": "Home",
+    "live": "Live",
+    "library": "Library",
+    "bible": "Scripture",
+    "songs": "Songs",
+    "settings": "Settings",
+    "director": "Director",
+    "planner": "Planner",
+    "editor": "Editor",
+    "media": "Media",
+    "audio": "Audio",
+    "templates": "Templates",
+    "looks": "Looks & Themes",
+    "props": "Props",
+    "messages": "Messages",
+    "timers": "Timers",
+    "transitions": "Transitions",
+    "macros": "Macros",
+    "timeline": "Timeline",
+    "video": "Live video",
+    "stage": "Stage display",
+    "screens": "Screens",
+    "remote": "Remote & API",
+    "ai": "AI Brain",
+    "post": "Post-service",
+    "analytics": "Analytics",
+    "team": "Team",
+    "audit": "Activity log",
+    "help": "Help",
+    "search": "Search",
+    "allModules": "All modules",
+    "sections": {
+      "run": "Run",
+      "content": "Content",
+      "production": "Production",
+      "intelligence": "Intelligence",
+      "admin": "Admin"
+    }
+  },
+  "status": {
+    "live": "LIVE",
+    "online": "Online",
+    "mic": "Microphone level",
+    "engine": {
+      "connected": "Engine connected",
+      "starting": "Engine starting",
+      "down": "Engine down"
+    }
+  },
+  "ai": {
+    "mode": "AI mode",
+    "modes": {
+      "manual": "Manual",
+      "assist": "Assist",
+      "auto": "Auto"
+    },
+    "pausedToast": "AI paused — it will not act until you resume",
+    "resumedToast": "AI resumed"
+  },
+  "settings": {
+    "theme": "Theme",
+    "density": "Density",
+    "themes": {
+      "dark": "Dark",
+      "light": "Light",
+      "hc": "High contrast"
+    },
+    "densities": {
+      "comfortable": "Comfortable",
+      "compact": "Compact"
+    }
+  },
+  "groups": {
+    "verse": "Verse",
+    "chorus": "Chorus",
+    "bridge": "Bridge",
+    "preChorus": "Pre-chorus",
+    "intro": "Intro",
+    "outro": "Outro",
+    "tag": "Tag",
+    "interlude": "Interlude",
+    "sermonPoint": "Sermon point",
+    "scripture": "Scripture",
+    "announcement": "Announcement",
+    "custom": "Custom"
+  },
+  "live": {
+    "take": "Take"
+  },
+  "palette": {
+    "title": "Command palette",
+    "description": "Search and run any command",
+    "placeholder": "Type a command or search…",
+    "empty": "No matching commands",
+    "goTo": "Go to",
+    "failed": "Command failed"
+  },
+  "styleguide": {
+    "title": "Design system",
+    "subtitle": "Living style guide — every token, component and state",
+    "brand": "Brand",
+    "color": "Color",
+    "typography": "Typography",
+    "sampleDisplay": "Worship in spirit and truth",
+    "sampleHeading": "Sunday Service — 9:00 AM",
+    "sampleBody": "Scribe AI listens to the service and helps the operator show the right scripture and lyrics at the right moment.",
+    "sampleCaption": "Last edited 2 minutes ago",
+    "buttons": "Buttons",
+    "brandAction": "Ask Scribe",
+    "inputs": "Inputs",
+    "hint": "Any reference format works.",
+    "searchPlaceholder": "Search songs, scripture, media…",
+    "withError": "Reference",
+    "errorText": "Matthew 3 has 17 verses.",
+    "select": "Translation",
+    "textarea": "Notes",
+    "switch": "Auto-advance",
+    "slider": "Volume",
+    "pickers": "Pickers",
+    "font": "Font",
+    "shortcut": "Shortcut",
+    "badges": "Badges, chips and meters",
+    "neutral": "Neutral",
+    "accent": "Accent",
+    "selected": "Selected",
+    "filter": "Filter",
+    "meter": "Confidence",
+    "overlays": "Overlays",
+    "openDialog": "Open dialog",
+    "openDrawer": "Open drawer",
+    "openPopover": "Open popover",
+    "popoverBody": "Popovers hold small, focused controls.",
+    "showToast": "Show toast",
+    "toastTitle": "Saved to playlist",
+    "openPalette": "Open command palette",
+    "rightClick": "Right-click me",
+    "dialogTitle": "Rename presentation",
+    "dialogBody": "Choose a clear name your team will recognise.",
+    "drawerTitle": "Inspector",
+    "drawerBody": "Drawers hold secondary detail without leaving the screen.",
+    "paletteA": "Take next slide",
+    "paletteB": "Open library",
+    "paletteC": "New song",
+    "tabs": "Tabs",
+    "tabOne": "Scripture tab content.",
+    "tabTwo": "Songs tab content.",
+    "data": "Data views",
+    "allLibraries": "All libraries",
+    "worship": "Worship",
+    "sermons": "Sermons",
+    "thumbs": "Thumbnails",
+    "slide": "Slide",
+    "timeline": "Timeline",
+    "slides": "Slides",
+    "audio": "Audio",
+    "layout": "Split panes (drag or use arrow keys; layout is saved)",
+    "states": "Screen states",
+    "emptyTitle": "No songs yet",
+    "emptyBody": "Paste lyrics or import a folder to build your song library.",
+    "populated": "Populated",
+    "populatedSub": "Content loaded"
+  },
+  "cmd": {
+    "group": {
+      "slide": "Slides",
+      "screen": "Screen",
+      "look": "Looks",
+      "scripture": "Scripture",
+      "song": "Songs",
+      "playlist": "Playlist",
+      "timer": "Timers",
+      "message": "Messages",
+      "prop": "Props",
+      "macro": "Macros",
+      "media": "Media",
+      "audio": "Audio",
+      "ai": "AI",
+      "output": "Outputs",
+      "app": "App"
+    },
+    "slide": {
+      "trigger": "Show slide",
+      "take": "Take preview to program",
+      "next": "Next slide",
+      "previous": "Previous slide",
+      "preview": "Preview slide",
+      "clear": "Clear slide text"
+    },
+    "transition": {
+      "set": "Set transition"
+    },
+    "screen": {
+      "clear": "Clear all layers",
+      "clearLayer": "Clear layer",
+      "blackout": "Toggle blackout",
+      "logo": "Toggle logo hold"
+    },
+    "look": {
+      "apply": "Apply look"
+    },
+    "background": {
+      "set": "Set background"
+    },
+    "theme": {
+      "apply": "Apply theme"
+    },
+    "scripture": {
+      "show": "Show scripture",
+      "load": "Load scripture to preview"
+    },
+    "song": {
+      "load": "Load song"
+    },
+    "presentation": {
+      "open": "Open presentation in Live"
+    },
+    "playlist": {
+      "select": "Select playlist",
+      "selectItem": "Select playlist item",
+      "nextItem": "Next playlist item",
+      "previousItem": "Previous playlist item"
+    },
+    "timer": {
+      "start": "Start timer",
+      "stop": "Stop timer",
+      "reset": "Reset timer",
+      "addTime": "Add time to timer",
+      "setVisibility": "Set timer visibility"
+    },
+    "message": {
+      "show": "Show message",
+      "hide": "Hide message"
+    },
+    "stage": {
+      "message": "Send stage message"
+    },
+    "prop": {
+      "toggle": "Toggle prop",
+      "clearAll": "Clear all props"
+    },
+    "media": {
+      "play": "Play media",
+      "stop": "Stop media"
+    },
+    "audio": {
+      "play": "Play audio",
+      "stop": "Stop audio",
+      "fade": "Fade out audio"
+    },
+    "macro": {
+      "run": "Run macro"
+    },
+    "service": {
+      "setState": "Set service state"
+    },
+    "ai": {
+      "setMode": "Set AI mode",
+      "pause": "Pause AI",
+      "resume": "Resume AI",
+      "togglePause": "Pause / resume AI",
+      "propose": "AI suggestion",
+      "approve": "Approve AI suggestion",
+      "dismiss": "Dismiss AI suggestion",
+      "undoLast": "Undo last AI action"
+    },
+    "app": {
+      "navigate": "Go to screen",
+      "openPalette": "Open command palette",
+      "undo": "Undo",
+      "setTheme": "Change theme",
+      "setLanguage": "Change language",
+      "toggleInspector": "Toggle inspector"
+    },
+    "output": {
+      "open": "Open output window",
+      "close": "Close output window",
+      "assignDisplay": "Assign display",
+      "testPattern": "Toggle test pattern",
+      "identify": "Identify screen"
+    }
+  }
+}
