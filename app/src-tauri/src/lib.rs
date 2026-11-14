@@ -2,16 +2,31 @@ use tauri::{Emitter, Manager};
 
 mod output_state;
 mod selftest;
+mod studio_window;
 mod windows;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let result = tauri::Builder::default()
         .manage(output_state::OutputStore::default())
+        .setup(|app| {
+            // Fit the Studio to the monitor it opens on (work area, DPI-aware), then show it.
+            if let Some(studio) = app.get_webview_window("studio") {
+                if let Err(e) = studio_window::fit_to_work_area(&studio) {
+                    eprintln!("could not fit studio window: {e}");
+                    if let Err(e) = studio.show() {
+                        eprintln!("could not show studio window: {e}");
+                    }
+                }
+            }
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             output_state::output_set_state,
             output_state::output_get_state,
             output_state::output_ack,
+            studio_window::studio_window_fit,
+            studio_window::studio_window_refit,
             selftest::selftest_enabled,
             selftest::selftest_report,
             selftest::selftest_fail,

@@ -153,11 +153,11 @@ pub async fn studio_reopen(app: AppHandle) -> Result<(), String> {
         .find(|w| w.label == "studio")
         .cloned()
         .ok_or_else(|| "studio window config missing".to_string())?;
-    WebviewWindowBuilder::from_config(&app, &config)
+    let studio = WebviewWindowBuilder::from_config(&app, &config)
         .map_err(|e| e.to_string())?
         .build()
         .map_err(|e| e.to_string())?;
-    Ok(())
+    crate::studio_window::fit_to_work_area(&studio)
 }
 
 #[tauri::command]
