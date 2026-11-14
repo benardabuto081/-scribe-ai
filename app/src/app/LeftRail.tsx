@@ -59,7 +59,7 @@ export function LeftRail() {
       >
         <LogoMark size={30} />
       </button>
-      <div className="flex min-h-0 flex-1 flex-col items-center gap-1 overflow-y-auto">
+      <div className="flex min-h-0 w-full flex-1 flex-col items-center gap-1 overflow-y-auto [scrollbar-width:none]">
         {pinned.map((item) => (
           <RailLink key={item.id} item={item} />
         ))}
@@ -82,7 +82,7 @@ export function LeftRail() {
           <AllModules onPick={() => setAllOpen(false)} />
         </Popover>
       </div>
-      <div className="flex flex-col items-center gap-1 border-t border-line pt-2">
+      <div className="flex w-full flex-col items-center gap-1 border-t border-line pt-2">
         {bottom.map((item) => (
           <RailLink key={item.id} item={item} />
         ))}
