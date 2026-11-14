@@ -9,7 +9,7 @@
 //! The window starts hidden (tauri.conf.json) and is shown only after it has been fitted.
 
 use serde::Serialize;
-use tauri::{LogicalSize, Monitor, PhysicalPosition, PhysicalSize, WebviewWindow};
+use tauri::{AppHandle, LogicalSize, Monitor, PhysicalPosition, PhysicalSize, WebviewWindow, WebviewWindowBuilder};
 
 const SMALL_W: f64 = 1366.0;
 const SMALL_H: f64 = 800.0;
@@ -91,13 +91,23 @@ pub async fn studio_window_fit(window: WebviewWindow) -> Result<FitReport, Strin
     })
 }
 
-/// Restores a minimized Studio and fits it to the work area again.
-#[tauri::command]
-pub async fn studio_window_refit(window: WebviewWindow) -> Result<(), String> {
-    if window.is_minimized().map_err(|e| e.to_string())? {
-        window.unminimize().map_err(|e| e.to_string())?;
+/// Builds the Studio window from tauri.conf.json (`create: false` there, so this is the only place).
+/// In self-test mode it gets an isolated WebView2 profile so the test never touches real data.
+pub fn build_studio(app: &AppHandle) -> Result<WebviewWindow, String> {
+    let config = app
+        .config()
+        .app
+        .windows
+        .iter()
+        .find(|w| w.label == "studio")
+        .cloned()
+        .ok_or_else(|| "studio window config missing".to_string())?;
+    let mut builder = WebviewWindowBuilder::from_config(app, &config).map_err(|e| e.to_string())?;
+    if let Some(dir) = crate::selftest::profile_dir() {
+        crate::selftest::log(format!("isolated profile: {}", dir.display()));
+        builder = builder.data_directory(dir.join("webview-studio"));
     }
-    fit_to_work_area(&window)
+    builder.build().map_err(|e| e.to_string())
 }
 
 #[cfg(test)]
