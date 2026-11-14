@@ -34,7 +34,9 @@
     "name": "Name",
     "title": "Title",
     "author": "Author",
-    "uses": "Uses"
+    "uses": "Uses",
+    "back": "Back",
+    "continue": "Continue"
   },
   "nav": {
     "home": "Home",
@@ -125,7 +127,8 @@
     "densities": {
       "comfortable": "Comfortable",
       "compact": "Compact"
-    }
+    },
+    "language": "Language"
   },
   "groups": {
     "verse": "Verse",
@@ -142,7 +145,70 @@
     "custom": "Custom"
   },
   "live": {
-    "take": "Take"
+    "take": "Take",
+    "plan": "Service plan",
+    "choosePlan": "Choose a plan",
+    "noPlanTitle": "No service plan",
+    "noPlanBody": "Create one in Planner, or use quick search below.",
+    "emptyPlanTitle": "This plan is empty",
+    "emptyPlanBody": "Add songs and scripture in Planner.",
+    "quickSearch": "Quick search",
+    "quickSearchPlaceholder": "Song title, lyric, or any reference (Jn 3:16)",
+    "loadScripture": "Load {{ref}}",
+    "preview": "Preview",
+    "program": "Program",
+    "prev": "Previous",
+    "next": "Next",
+    "clearText": "Clear text",
+    "clearAll": "Clear all",
+    "clearLayer": "Clear layer…",
+    "layers": {
+      "background": "Background",
+      "media": "Media",
+      "props": "Props",
+      "messages": "Messages",
+      "audio": "Audio"
+    },
+    "nothingLoaded": "Nothing loaded",
+    "slideCount_one": "{{count}} slide",
+    "slideCount_other": "{{count}} slides",
+    "gridHint": "Click: on air · Alt+click: preview · 1–9: on air",
+    "slides": "Slides",
+    "blankSlide": "Blank slide",
+    "emptyTitle": "Pick something to show",
+    "emptyBody": "Choose an item from the service plan or search for a song or scripture.",
+    "ai": {
+      "title": "AI assistant",
+      "engineOn": "Engine on",
+      "engineOff": "Engine off",
+      "simulate": "Simulate AI",
+      "simulateHint": "Plays a scripted service through the real controls. Not the real engine.",
+      "suggestions": "Suggestions",
+      "noSuggestions": "No suggestions right now.",
+      "manualHint": "Manual mode: the AI listens but does not suggest.",
+      "recent": "Recent",
+      "transcript": "Transcript",
+      "listening": "Listening…",
+      "noTranscript": "The live transcript appears here when the AI engine is running.",
+      "approve": "Approve",
+      "dismiss": "Dismiss",
+      "show": "Show",
+      "manual": "Show any scripture",
+      "manualPlaceholder": "e.g. Yohana 3:16, Ps 23",
+      "kinds": {
+        "scripture": "Scripture",
+        "lyric": "Lyrics",
+        "state": "Service state",
+        "command": "Action"
+      },
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "dismissed": "Dismissed",
+        "auto": "Auto",
+        "failed": "Failed"
+      }
+    }
   },
   "palette": {
     "title": "Command palette",
@@ -233,7 +299,9 @@
       "audio": "Audio",
       "ai": "AI",
       "output": "Outputs",
-      "app": "App"
+      "app": "App",
+      "add": "Add group",
+      "update": "Edit group"
     },
     "slide": {
       "trigger": "Show slide",
@@ -241,7 +309,11 @@
       "next": "Next slide",
       "previous": "Previous slide",
       "preview": "Preview slide",
-      "clear": "Clear slide text"
+      "clear": "Clear slide text",
+      "add": "Add slide",
+      "updateText": "Edit slide text",
+      "delete": "Delete slide",
+      "setElements": "Edit slide canvas"
     },
     "transition": {
       "set": "Set transition"
@@ -266,16 +338,30 @@
       "load": "Load scripture to preview"
     },
     "song": {
-      "load": "Load song"
+      "load": "Load song",
+      "createFromText": "Create song from lyrics"
     },
     "presentation": {
-      "open": "Open presentation in Live"
+      "open": "Open presentation in Live",
+      "create": "New presentation",
+      "update": "Edit presentation details",
+      "duplicate": "Duplicate presentation",
+      "trash": "Move to trash",
+      "restore": "Restore from trash",
+      "purge": "Delete permanently"
     },
     "playlist": {
       "select": "Select playlist",
       "selectItem": "Select playlist item",
       "nextItem": "Next playlist item",
-      "previousItem": "Previous playlist item"
+      "previousItem": "Previous playlist item",
+      "create": "New service plan",
+      "duplicate": "Duplicate service plan",
+      "update": "Edit service plan",
+      "addItem": "Add plan item",
+      "updateItem": "Edit plan item",
+      "removeItem": "Remove plan item",
+      "moveItem": "Move plan item"
     },
     "timer": {
       "start": "Start timer",
@@ -334,6 +420,17 @@
       "assignDisplay": "Assign display",
       "testPattern": "Toggle test pattern",
       "identify": "Identify screen"
+    },
+    "arrangement": {
+      "set": "Change arrangement",
+      "select": "Use arrangement"
+    },
+    "auth": {
+      "signOut": "Sign out"
+    },
+    "onboarding": {
+      "complete": "Finish setup",
+      "restart": "Run setup again"
     }
   },
   "shell": {
@@ -398,5 +495,247 @@
   "bible": {
     "sampleOnlyTitle": "Bible database not connected",
     "sampleOnlyBody": "Showing built-in sample verses only"
+  },
+  "languages": {
+    "en": "English",
+    "sw": "Kiswahili",
+    "luo": "Dholuo",
+    "ki": "Gĩkũyũ",
+    "lg": "Luganda",
+    "fr": "Français"
+  },
+  "roles": {
+    "admin": "Admin",
+    "adminDesc": "Everything, including settings, team and outputs",
+    "operator": "Operator",
+    "operatorDesc": "Runs the live service",
+    "planner": "Planner",
+    "plannerDesc": "Builds service plans and content",
+    "designer": "Designer",
+    "designerDesc": "Creates slides, themes and templates",
+    "viewer": "Viewer",
+    "viewerDesc": "Can look, cannot change anything"
+  },
+  "auth": {
+    "heroTitle": "Run the whole service from one place — with an AI that helps.",
+    "heroPoint1": "Lyrics, scripture, slides and media on every screen",
+    "heroPoint2": "Works fully offline. No account required.",
+    "heroPoint3": "The AI suggests; you stay in control",
+    "footer": "Your data stays on this computer in Local Mode.",
+    "email": "Email",
+    "password": "Password",
+    "name": "Your name",
+    "splash": {
+      "checking": "Starting…"
+    },
+    "license": {
+      "grace": "Offline — license valid for {{days}} more days",
+      "graceExpired": "Offline for a long time — cloud features paused",
+      "expired": "Subscription ended — cloud features paused"
+    },
+    "signIn": {
+      "title": "Welcome",
+      "subtitle": "Start in Local Mode, or sign in to sync with your team.",
+      "localMode": "Continue in Local Mode",
+      "localModeHint": "Everything works offline on this computer. You can add an account later.",
+      "orAccount": "or use an account",
+      "offlineNote": "You are offline. Account sign-in needs internet; Local Mode works now.",
+      "forgot": "Forgot password?",
+      "submit": "Sign in",
+      "google": "Continue with Google",
+      "noAccount": "No account yet?",
+      "createLink": "Create one"
+    },
+    "create": {
+      "title": "Create account",
+      "subtitle": "One account for your whole church team.",
+      "passwordHint": "At least {{n}} characters",
+      "submit": "Create account"
+    },
+    "forgot": {
+      "title": "Reset password",
+      "subtitle": "We will email you a link to choose a new password.",
+      "submit": "Send reset link",
+      "sentTitle": "Check your email",
+      "sentBody": "If an account exists for {{email}}, a reset link is on its way."
+    },
+    "workspace": {
+      "title": "Church workspace",
+      "subtitle": "Signed in as {{name}}. Choose where to work.",
+      "signInFirst": "Sign in first to choose a workspace.",
+      "mine": "My workspaces",
+      "create": "Create",
+      "join": "Join",
+      "none": "You are not in any workspace yet. Create one or join with an invite code.",
+      "churchName": "Church name",
+      "inviteCode": "Invite code",
+      "inviteHint": "6 letters or numbers, from your admin",
+      "createSubmit": "Create workspace",
+      "joinSubmit": "Join workspace"
+    },
+    "role": {
+      "title": "Your role",
+      "subtitle": "What will you mostly do in {{name}}?"
+    },
+    "errors": {
+      "offline": "No internet connection. Use Local Mode, or try again when online.",
+      "invalid_credentials": "Email or password is incorrect.",
+      "email_taken": "An account with this email already exists.",
+      "weak_password": "Password must be at least 8 characters.",
+      "invalid_email": "Enter a valid email address.",
+      "invalid_code": "That invite code is not valid.",
+      "unknown": "Something went wrong. Please try again.",
+      "nameRequired": "Enter your name."
+    }
+  },
+  "onboarding": {
+    "title": "Set up Scribe AI",
+    "steps": "Setup steps",
+    "progress": "Step {{n}} of {{total}}",
+    "keys": "Enter: next · Alt+←: back",
+    "skip": "Skip for now",
+    "next": "Next",
+    "skipped": "Skipped",
+    "done": "Done",
+    "church": {
+      "short": "Church",
+      "title": "Your church",
+      "subtitle": "Shown on screens, run sheets and the remote.",
+      "name": "Church name",
+      "nameHint": "Required",
+      "city": "City / town",
+      "country": "Country",
+      "logo": "Logo",
+      "chooseLogo": "Choose logo",
+      "replaceLogo": "Replace",
+      "logoHint": "PNG or SVG, up to 2 MB. Used for logo hold and props.",
+      "logoType": "Choose an image file.",
+      "logoSize": "That image is larger than 2 MB."
+    },
+    "languages": {
+      "short": "Languages",
+      "title": "Languages and Bibles",
+      "subtitle": "What you speak in the service and which translations to show.",
+      "ui": "App language",
+      "service": "Languages used in services",
+      "serviceHint": "Helps the AI listen and lets you build bilingual slides.",
+      "translations": "Bible translations",
+      "bundled": "Included",
+      "importLicensed": "Import a licensed translation (e.g. Swahili Union Version)"
+    },
+    "hardware": {
+      "short": "Hardware",
+      "title": "Hardware check",
+      "subtitle": "A quick look at this computer. Nothing here blocks you.",
+      "checking": "Checking this computer…",
+      "ram": "Memory",
+      "ramNote": "8 GB recommended for live AI listening",
+      "cpu": "Processor",
+      "cores": "{{n}} cores",
+      "cpuNote": "4 cores or more recommended",
+      "gpu": "Graphics",
+      "displays": "Displays",
+      "displaysNote": "Connect a projector or TV for the audience screen",
+      "mic": "Microphones",
+      "micNote": "No microphone found. AI listening needs an audio input.",
+      "unknown": "Unknown",
+      "ok": "Good",
+      "low": "Below recommended",
+      "info": "Info",
+      "recheck": "Check again"
+    },
+    "audio": {
+      "short": "Audio",
+      "title": "Audio source",
+      "subtitle": "Pick the input that carries the pastor and worship leader.",
+      "device": "Input device",
+      "defaultDevice": "System default",
+      "mic": "Microphone",
+      "start": "Test microphone",
+      "stop": "Stop test",
+      "idle": "Press Test and the meter will move when you speak.",
+      "saySomething": "Say something…",
+      "heard": "We can hear you. Audio is working.",
+      "denied": "Microphone access was blocked. Allow it in Windows privacy settings, then try again.",
+      "failed": "Could not open this microphone."
+    },
+    "models": {
+      "short": "AI model",
+      "title": "AI model pack",
+      "subtitle": "The speech model runs on this computer. No audio leaves the device.",
+      "download": "Download model pack",
+      "downloadBody": "About 460 MB. Best on a good connection.",
+      "downloadOffline": "You are offline — use a USB stick or folder instead.",
+      "folder": "Load from USB or folder",
+      "folderBody": "Choose the folder that contains model.bin and config.json (for example from a USB stick).",
+      "chooseFolder": "Choose folder",
+      "valid": "Model pack found in “{{folder}}”.",
+      "invalid": "This folder is not a model pack. Missing: {{missing}}",
+      "note": "Installation finishes when the AI engine is set up. Until then AI features stay off and everything else works."
+    },
+    "displays": {
+      "short": "Displays",
+      "title": "Screens",
+      "subtitle": "Choose where the audience and stage screens appear.",
+      "found_one": "{{count}} display found.",
+      "found_other": "{{count}} displays found.",
+      "later": "You can change this any time in Screens."
+    },
+    "import": {
+      "short": "Import",
+      "title": "Bring in your songs",
+      "subtitle": "Paste lyrics now; more importers come later.",
+      "pasteTitle": "Paste lyrics",
+      "lyrics": "Lyrics",
+      "lyricsHint": "Headers like Verse 1, Chorus or Kiitikio are detected automatically.",
+      "detected": "Detected sections",
+      "addSong": "Add to library",
+      "added": "“{{title}}” added",
+      "count_one": "{{count}} song added",
+      "count_other": "{{count}} songs added",
+      "media": "Import media",
+      "mediaBody": "Images, videos and audio arrive with the Media bin."
+    },
+    "team": {
+      "short": "Team",
+      "title": "Invite your team",
+      "subtitle": "Operators, planners and designers can work together.",
+      "localTitle": "Inviting needs an account",
+      "localBody": "You are in Local Mode. Add an account later in Settings to invite your team.",
+      "add": "Add",
+      "queued": "Invites are sent when you are online."
+    },
+    "finish": {
+      "short": "Finish",
+      "title": "You are ready",
+      "subtitle": "Try a practice service before Sunday.",
+      "ready": "{{church}} is ready.",
+      "practiceBody": "Open Live with a sample service plan and practise taking slides to the screens.",
+      "practice": "Start a practice service",
+      "home": "Go to Home"
+    }
+  },
+  "planner": {
+    "templates": {
+      "sunday": "Sunday service",
+      "midweek": "Midweek service",
+      "youth": "Youth service",
+      "funeral": "Funeral",
+      "wedding": "Wedding",
+      "crusade": "Crusade",
+      "vigil": "Overnight vigil",
+      "communion": "Communion",
+      "baptism": "Baptism"
+    }
+  },
+  "transitions": {
+    "cut": "Cut",
+    "fade": "Fade",
+    "dissolve": "Dissolve",
+    "push": "Push",
+    "slide": "Slide",
+    "wipe": "Wipe",
+    "zoom": "Zoom",
+    "blur": "Blur"
   }
 }

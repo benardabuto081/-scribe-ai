@@ -9,7 +9,7 @@ Honest status of every feature in `docs/SPEC.md` sections 4 and 5.
 | `partial` | Some real behavior works (listed in Notes); the rest is mock. |
 | `done` | Meets the Definition of Done in `CLAUDE.md`. |
 
-Last updated: Phase A, Step 4.
+Last updated: Phase A, Step 6 (C1 Live Control).
 
 ## Temporary items (must be replaced)
 
@@ -17,6 +17,8 @@ Last updated: Phase A, Step 4.
 |---|---|---|
 | Brand mark (`app/src/assets/brand/mark.png`, `mark-tile.png`, `public/favicon.png`, `src-tauri/icons/*`) | Machine-cropped from `logo.jpeg` by `app/scripts/brand-crop.ps1` (black background converted to alpha). JPEG artifacts visible at large sizes. | Official transparent PNG/SVG mark and wordmark from the brand owner. |
 | `VITE_USE_MOCKS=true` in `app/.env.production` | Phase A has no persistence, so the packaged build ships with seeded mock data. | Remove in Phase B when SQLite storage lands. |
+| Mock auth backend (src/mocks/authProvider.ts) | No cloud backend yet; account sign-in, Google, workspaces and invites are simulated (600 ms latency, offline errors). | Real backend implementing AuthProvider (Phase F). |
+| Mock license signature (features/auth/license.ts mockSign) | FNV hash with a dev key, not cryptographic. Grace-period logic is real and tested. | Asymmetric signature verified with a bundled public key (Phase F). |
 
 ## Foundation
 
@@ -35,13 +37,13 @@ Last updated: Phase A, Step 4.
 
 | Feature | Status | Notes |
 |---|---|---|
-| Splash and license check | none | |
-| Sign in / Continue in Local Mode | none | |
-| Create account | none | |
-| Forgot / reset password | none | |
-| Workspace create / join | none | |
-| Role pick | none | |
-| First-run wizard | none | |
+| Splash and license check | partial | Cached license, 90-day offline grace, never blocks; status badge on splash. Signature is mock. |
+| Sign in / Continue in Local Mode | partial | Local Mode is real and fully offline (no network calls). Email and Google sign-in run against the mock AuthProvider. |
+| Create account | mock | Validation real; backend mock. |
+| Forgot / reset password | mock | Request + sent state; backend mock. |
+| Workspace create / join | mock | List, create, join by 6-character code; backend mock. |
+| Role pick | partial | Sets the session role, which drives Command Bus permissions (real). |
+| First-run wizard | partial | 9 steps, one per screen, resumable (persisted), skippable where safe, keyboard (Enter / Alt+Left). Real: church profile + logo, UI language, hardware check, microphone test with live meter, model-pack folder validation (USB/folder), display assignment, paste-lyrics import (creates songs). Coming soon: model download, licensed Bible import, media import, sending team invites. |
 
 ## Section 4 — Studio modules
 
@@ -51,7 +53,7 @@ Last updated: Phase A, Step 4.
 | 4.2 | Library | none | |
 | 4.3 | Presentation editor | none | |
 | 4.4 | Playlists / Planner | none | |
-| 4.5 | Live Control | none | |
+| 4.5 | Live Control | partial | Three resizable panes (layout saved). Plan queue + quick search (songs, any scripture reference). Preview and Program monitors use the real audience renderer. Take / Next / Previous / Clear / Clear all / Blackout / Logo, transition picker, per-layer clear, numbered slide grid with group colors, 1-9 keys. AI panel: suggestions with confidence + explanation, Approve / Dismiss, mode, Pause, Undo last AI action, manual scripture box. Quick-bar: timers, props, messages, macros. AI feed is a visible Simulate AI switch (scripted) until the engine connects (Phase C). Data is mock (no persistence). |
 | 4.6 | Looks, Themes, Templates | none | |
 | 4.7 | Props | none | |
 | 4.8 | Messages | none | |

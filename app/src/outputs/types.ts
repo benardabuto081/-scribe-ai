@@ -11,6 +11,31 @@ import { z } from 'zod';
 export const TRANSITION_KINDS = ['cut', 'fade', 'dissolve', 'push', 'slide', 'wipe', 'zoom', 'blur'] as const;
 export type TransitionKind = (typeof TRANSITION_KINDS)[number];
 
+/** Designed-canvas element (same shape as the editor's SlideElement; 1920x1080 design space). */
+const Element = z.object({
+  id: z.string(),
+  type: z.enum(['text', 'shape']),
+  x: z.number(),
+  y: z.number(),
+  w: z.number(),
+  h: z.number(),
+  rotation: z.number(),
+  text: z.string().optional(),
+  style: z.object({
+    fontFamily: z.string(),
+    fontSize: z.number(),
+    fontWeight: z.number(),
+    color: z.string(),
+    align: z.enum(['left', 'center', 'right']),
+    fill: z.string(),
+    shape: z.enum(['rect', 'ellipse']),
+    radius: z.number(),
+    opacity: z.number(),
+    shadow: z.boolean(),
+  }),
+});
+export type OutputElement = z.infer<typeof Element>;
+
 const SlideContent = z.object({
   key: z.string(), // changes whenever the content changes (drives transitions)
   text: z.string(),
@@ -20,6 +45,8 @@ const SlideContent = z.object({
   groupColor: z.string().optional(),
   notes: z.string().optional(),
   title: z.string().optional(),
+  /** When present, the slide renders as a designed canvas instead of themed text. */
+  elements: z.array(Element).optional(),
 });
 export type SlideContent = z.infer<typeof SlideContent>;
 

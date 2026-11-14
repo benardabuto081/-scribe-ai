@@ -12,6 +12,16 @@
   color: #fff;
   user-select: none;
 }
+/* Embedded monitor (Studio Preview/Program): same renderer, sized by its parent. */
+.sa-frame {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  container-type: size;
+  aspect-ratio: 16 / 9;
+  color: #fff;
+  user-select: none;
+}
 .sa-output--windowed {
   cursor: default;
 }

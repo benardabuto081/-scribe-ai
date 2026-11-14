@@ -56,6 +56,12 @@ export function installKeyboard(target: Window = window): () => void {
         return;
       }
     }
+    // 1–9 put slide N on air (slide.trigger with an index argument).
+    if (!hasModifier && /^[1-9]$/.test(combo)) {
+      e.preventDefault();
+      void execute('slide.trigger', { index: Number(combo) - 1 }, { source: 'keyboard' });
+      return;
+    }
     const commandId = buildMap().get(combo);
     if (!commandId) return;
     e.preventDefault();

@@ -12,3 +12,6 @@ class ResizeObserverStub {
   disconnect() {}
 }
 globalThis.ResizeObserver ??= ResizeObserverStub as unknown as typeof ResizeObserver;
+
+// jsdom lacks scrollIntoView (cmdk calls it when the selection moves).
+Element.prototype.scrollIntoView ??= function scrollIntoView() {};

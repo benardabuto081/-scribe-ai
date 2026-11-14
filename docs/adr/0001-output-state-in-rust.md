@@ -46,6 +46,12 @@ Browser dev mode uses the same contract through `BroadcastChannel` plus a `local
    Every native call from the UI goes through `invokeChecked` (`outputs/tauri.ts`), which times out
    after 8 s so a hang becomes a visible error (toast and audit log entry) instead of silence.
 
+9. **Outputs are pre-created hidden.** Shortly after startup Rust builds the Audience and Stage
+   windows hidden (own WebView2 profile, so own process). They load, subscribe to state and render
+   while hidden, so Open only positions and shows them (measured 0 ms show, ~250 ms to first
+   acknowledged render, previously up to 12 s). Closing an output hides it rather than destroying
+   it. When the Studio closes and no output is visible, the app exits.
+
 ## Consequences
 
 - The output renderer is small and independent. Visual changes to outputs must go through the

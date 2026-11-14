@@ -34,7 +34,9 @@
     "name": "Jina",
     "title": "Kichwa",
     "author": "Mwandishi",
-    "uses": "Matumizi"
+    "uses": "Matumizi",
+    "back": "Rudi",
+    "continue": "Endelea"
   },
   "nav": {
     "home": "Nyumbani",
@@ -125,7 +127,8 @@
     "densities": {
       "comfortable": "Nafasi",
       "compact": "Kubana"
-    }
+    },
+    "language": "Lugha"
   },
   "groups": {
     "verse": "Ubeti",
@@ -142,7 +145,70 @@
     "custom": "Maalum"
   },
   "live": {
-    "take": "Onyesha"
+    "take": "Onyesha",
+    "plan": "Mpango wa ibada",
+    "choosePlan": "Chagua mpango",
+    "noPlanTitle": "Hakuna mpango wa ibada",
+    "noPlanBody": "Unda mmoja kwenye Mpangaji, au tumia utafutaji wa haraka hapa chini.",
+    "emptyPlanTitle": "Mpango huu hauna vitu",
+    "emptyPlanBody": "Ongeza nyimbo na maandiko kwenye Mpangaji.",
+    "quickSearch": "Utafutaji wa haraka",
+    "quickSearchPlaceholder": "Jina la wimbo, maneno, au rejea yoyote (Yn 3:16)",
+    "loadScripture": "Pakia {{ref}}",
+    "preview": "Hakikisho",
+    "program": "Hewani",
+    "prev": "Iliyotangulia",
+    "next": "Inayofuata",
+    "clearText": "Futa maandishi",
+    "clearAll": "Futa yote",
+    "clearLayer": "Futa tabaka…",
+    "layers": {
+      "background": "Mandharinyuma",
+      "media": "Picha/video",
+      "props": "Vipambo",
+      "messages": "Ujumbe",
+      "audio": "Sauti"
+    },
+    "nothingLoaded": "Hakuna kilichopakiwa",
+    "slideCount_one": "Slaidi {{count}}",
+    "slideCount_other": "Slaidi {{count}}",
+    "gridHint": "Bofya: hewani · Alt+bofya: hakikisho · 1–9: hewani",
+    "slides": "Slaidi",
+    "blankSlide": "Slaidi tupu",
+    "emptyTitle": "Chagua kitu cha kuonyesha",
+    "emptyBody": "Chagua kipengele kwenye mpango wa ibada au tafuta wimbo au andiko.",
+    "ai": {
+      "title": "Msaidizi wa AI",
+      "engineOn": "Injini iko hai",
+      "engineOff": "Injini imezimwa",
+      "simulate": "Iga AI",
+      "simulateHint": "Huendesha ibada ya mfano kupitia vidhibiti halisi. Si injini halisi.",
+      "suggestions": "Mapendekezo",
+      "noSuggestions": "Hakuna mapendekezo kwa sasa.",
+      "manualHint": "Hali ya mkono: AI husikiliza lakini haipendekezi.",
+      "recent": "Ya karibuni",
+      "transcript": "Nakala ya maneno",
+      "listening": "Inasikiliza…",
+      "noTranscript": "Nakala ya moja kwa moja itaonekana hapa injini ya AI ikiendeshwa.",
+      "approve": "Kubali",
+      "dismiss": "Kataa",
+      "show": "Onyesha",
+      "manual": "Onyesha andiko lolote",
+      "manualPlaceholder": "k.m. Yohana 3:16, Zab 23",
+      "kinds": {
+        "scripture": "Andiko",
+        "lyric": "Maneno ya wimbo",
+        "state": "Hali ya ibada",
+        "command": "Kitendo"
+      },
+      "status": {
+        "pending": "Inasubiri",
+        "approved": "Imekubaliwa",
+        "dismissed": "Imekataliwa",
+        "auto": "Otomatiki",
+        "failed": "Imeshindwa"
+      }
+    }
   },
   "palette": {
     "title": "Orodha ya amri",
@@ -233,7 +299,9 @@
       "audio": "Sauti",
       "ai": "AI",
       "output": "Skrini za matokeo",
-      "app": "Programu"
+      "app": "Programu",
+      "add": "Ongeza kikundi",
+      "update": "Hariri kikundi"
     },
     "slide": {
       "trigger": "Onyesha slaidi",
@@ -241,7 +309,11 @@
       "next": "Slaidi inayofuata",
       "previous": "Slaidi iliyotangulia",
       "preview": "Hakiki slaidi",
-      "clear": "Futa maandishi ya slaidi"
+      "clear": "Futa maandishi ya slaidi",
+      "add": "Ongeza slaidi",
+      "updateText": "Hariri maandishi ya slaidi",
+      "delete": "Futa slaidi",
+      "setElements": "Hariri turubai ya slaidi"
     },
     "transition": {
       "set": "Weka mpito"
@@ -266,16 +338,30 @@
       "load": "Pakia andiko kwa hakikisho"
     },
     "song": {
-      "load": "Pakia wimbo"
+      "load": "Pakia wimbo",
+      "createFromText": "Unda wimbo kutoka maneno"
     },
     "presentation": {
-      "open": "Fungua wasilisho kwenye Moja kwa moja"
+      "open": "Fungua wasilisho kwenye Moja kwa moja",
+      "create": "Wasilisho jipya",
+      "update": "Hariri maelezo ya wasilisho",
+      "duplicate": "Nakili wasilisho",
+      "trash": "Hamishia kwenye tupio",
+      "restore": "Rejesha kutoka tupio",
+      "purge": "Futa kabisa"
     },
     "playlist": {
       "select": "Chagua orodha",
       "selectItem": "Chagua kipengele cha orodha",
       "nextItem": "Kipengele kinachofuata",
-      "previousItem": "Kipengele kilichotangulia"
+      "previousItem": "Kipengele kilichotangulia",
+      "create": "Mpango mpya wa ibada",
+      "duplicate": "Nakili mpango wa ibada",
+      "update": "Hariri mpango wa ibada",
+      "addItem": "Ongeza kipengele",
+      "updateItem": "Hariri kipengele",
+      "removeItem": "Ondoa kipengele",
+      "moveItem": "Hamisha kipengele"
     },
     "timer": {
       "start": "Anzisha saa",
@@ -334,6 +420,17 @@
       "assignDisplay": "Panga skrini",
       "testPattern": "Mchoro wa majaribio (washa/zima)",
       "identify": "Tambua skrini"
+    },
+    "arrangement": {
+      "set": "Badilisha mpangilio",
+      "select": "Tumia mpangilio"
+    },
+    "auth": {
+      "signOut": "Toka"
+    },
+    "onboarding": {
+      "complete": "Maliza maandalizi",
+      "restart": "Andaa tena"
     }
   },
   "shell": {
@@ -398,5 +495,247 @@
   "bible": {
     "sampleOnlyTitle": "Hifadhidata ya Biblia haijaunganishwa",
     "sampleOnlyBody": "Inaonyesha mistari ya mfano iliyojengwa ndani pekee"
+  },
+  "languages": {
+    "en": "Kiingereza",
+    "sw": "Kiswahili",
+    "luo": "Dholuo",
+    "ki": "Gĩkũyũ",
+    "lg": "Luganda",
+    "fr": "Kifaransa"
+  },
+  "roles": {
+    "admin": "Msimamizi",
+    "adminDesc": "Kila kitu, pamoja na mipangilio, timu na skrini",
+    "operator": "Mwendeshaji",
+    "operatorDesc": "Huendesha ibada moja kwa moja",
+    "planner": "Mpangaji",
+    "plannerDesc": "Huandaa mipango ya ibada na maudhui",
+    "designer": "Msanifu",
+    "designerDesc": "Huunda slaidi, mandhari na violezo",
+    "viewer": "Mtazamaji",
+    "viewerDesc": "Anaweza kuona, hawezi kubadilisha"
+  },
+  "auth": {
+    "heroTitle": "Endesha ibada nzima mahali pamoja — pamoja na AI inayosaidia.",
+    "heroPoint1": "Maneno ya nyimbo, maandiko, slaidi na picha kwenye kila skrini",
+    "heroPoint2": "Hufanya kazi bila mtandao kabisa. Akaunti si lazima.",
+    "heroPoint3": "AI hupendekeza; wewe ndiye unayeamua",
+    "footer": "Data yako inabaki kwenye kompyuta hii katika Hali ya Ndani.",
+    "email": "Barua pepe",
+    "password": "Nenosiri",
+    "name": "Jina lako",
+    "splash": {
+      "checking": "Inaanza…"
+    },
+    "license": {
+      "grace": "Nje ya mtandao — leseni ni halali kwa siku {{days}} zaidi",
+      "graceExpired": "Nje ya mtandao kwa muda mrefu — huduma za wingu zimesimamishwa",
+      "expired": "Usajili umeisha — huduma za wingu zimesimamishwa"
+    },
+    "signIn": {
+      "title": "Karibu",
+      "subtitle": "Anza katika Hali ya Ndani, au ingia ili kushirikiana na timu yako.",
+      "localMode": "Endelea katika Hali ya Ndani",
+      "localModeHint": "Kila kitu hufanya kazi bila mtandao kwenye kompyuta hii. Unaweza kuongeza akaunti baadaye.",
+      "orAccount": "au tumia akaunti",
+      "offlineNote": "Uko nje ya mtandao. Kuingia kwa akaunti kunahitaji intaneti; Hali ya Ndani inafanya kazi sasa.",
+      "forgot": "Umesahau nenosiri?",
+      "submit": "Ingia",
+      "google": "Endelea na Google",
+      "noAccount": "Bado huna akaunti?",
+      "createLink": "Fungua moja"
+    },
+    "create": {
+      "title": "Fungua akaunti",
+      "subtitle": "Akaunti moja kwa timu nzima ya kanisa lako.",
+      "passwordHint": "Angalau herufi {{n}}",
+      "submit": "Fungua akaunti"
+    },
+    "forgot": {
+      "title": "Weka upya nenosiri",
+      "subtitle": "Tutakutumia kiungo cha kuchagua nenosiri jipya.",
+      "submit": "Tuma kiungo",
+      "sentTitle": "Angalia barua pepe yako",
+      "sentBody": "Ikiwa kuna akaunti ya {{email}}, kiungo kinakuja."
+    },
+    "workspace": {
+      "title": "Eneo la kazi la kanisa",
+      "subtitle": "Umeingia kama {{name}}. Chagua mahali pa kufanyia kazi.",
+      "signInFirst": "Ingia kwanza ili kuchagua eneo la kazi.",
+      "mine": "Maeneo yangu",
+      "create": "Unda",
+      "join": "Jiunge",
+      "none": "Bado hauko kwenye eneo lolote. Unda moja au jiunge kwa msimbo wa mwaliko.",
+      "churchName": "Jina la kanisa",
+      "inviteCode": "Msimbo wa mwaliko",
+      "inviteHint": "Herufi au namba 6, kutoka kwa msimamizi wako",
+      "createSubmit": "Unda eneo la kazi",
+      "joinSubmit": "Jiunge na eneo la kazi"
+    },
+    "role": {
+      "title": "Jukumu lako",
+      "subtitle": "Utafanya nini zaidi katika {{name}}?"
+    },
+    "errors": {
+      "offline": "Hakuna intaneti. Tumia Hali ya Ndani, au jaribu tena ukiwa mtandaoni.",
+      "invalid_credentials": "Barua pepe au nenosiri si sahihi.",
+      "email_taken": "Tayari kuna akaunti yenye barua pepe hii.",
+      "weak_password": "Nenosiri lazima liwe na angalau herufi 8.",
+      "invalid_email": "Weka anwani sahihi ya barua pepe.",
+      "invalid_code": "Msimbo huo wa mwaliko si sahihi.",
+      "unknown": "Hitilafu imetokea. Tafadhali jaribu tena.",
+      "nameRequired": "Weka jina lako."
+    }
+  },
+  "onboarding": {
+    "title": "Andaa Scribe AI",
+    "steps": "Hatua za maandalizi",
+    "progress": "Hatua {{n}} kati ya {{total}}",
+    "keys": "Enter: endelea · Alt+←: rudi",
+    "skip": "Ruka kwa sasa",
+    "next": "Endelea",
+    "skipped": "Imerukwa",
+    "done": "Imekamilika",
+    "church": {
+      "short": "Kanisa",
+      "title": "Kanisa lako",
+      "subtitle": "Huonyeshwa kwenye skrini, ratiba na rimoti.",
+      "name": "Jina la kanisa",
+      "nameHint": "Lazima",
+      "city": "Mji / mtaa",
+      "country": "Nchi",
+      "logo": "Nembo",
+      "chooseLogo": "Chagua nembo",
+      "replaceLogo": "Badilisha",
+      "logoHint": "PNG au SVG, hadi MB 2. Hutumika kwa kuonyesha nembo na vipambo.",
+      "logoType": "Chagua faili la picha.",
+      "logoSize": "Picha hiyo ni kubwa kuliko MB 2."
+    },
+    "languages": {
+      "short": "Lugha",
+      "title": "Lugha na Biblia",
+      "subtitle": "Lugha mnazotumia ibadani na tafsiri za kuonyesha.",
+      "ui": "Lugha ya programu",
+      "service": "Lugha zinazotumika ibadani",
+      "serviceHint": "Husaidia AI kusikiliza na hukuwezesha kuunda slaidi za lugha mbili.",
+      "translations": "Tafsiri za Biblia",
+      "bundled": "Imejumuishwa",
+      "importLicensed": "Leta tafsiri yenye leseni (k.m. Swahili Union Version)"
+    },
+    "hardware": {
+      "short": "Vifaa",
+      "title": "Ukaguzi wa vifaa",
+      "subtitle": "Mtazamo mfupi wa kompyuta hii. Hakuna kitu hapa kinachokuzuia.",
+      "checking": "Inakagua kompyuta hii…",
+      "ram": "Kumbukumbu",
+      "ramNote": "GB 8 zinapendekezwa kwa AI kusikiliza moja kwa moja",
+      "cpu": "Kichakataji",
+      "cores": "Viini {{n}}",
+      "cpuNote": "Viini 4 au zaidi vinapendekezwa",
+      "gpu": "Michoro",
+      "displays": "Skrini",
+      "displaysNote": "Unganisha projekta au TV kwa skrini ya hadhira",
+      "mic": "Vipaza sauti",
+      "micNote": "Hakuna kipaza sauti. AI inahitaji chanzo cha sauti ili kusikiliza.",
+      "unknown": "Haijulikani",
+      "ok": "Nzuri",
+      "low": "Chini ya inavyopendekezwa",
+      "info": "Taarifa",
+      "recheck": "Kagua tena"
+    },
+    "audio": {
+      "short": "Sauti",
+      "title": "Chanzo cha sauti",
+      "subtitle": "Chagua chanzo kinachobeba sauti ya mchungaji na kiongozi wa kuabudu.",
+      "device": "Kifaa cha kuingiza",
+      "defaultDevice": "Chaguo-msingi la mfumo",
+      "mic": "Kipaza sauti",
+      "start": "Jaribu kipaza sauti",
+      "stop": "Simamisha jaribio",
+      "idle": "Bonyeza Jaribu na mita itasogea ukiongea.",
+      "saySomething": "Sema kitu…",
+      "heard": "Tunakusikia. Sauti inafanya kazi.",
+      "denied": "Ufikiaji wa kipaza sauti umezuiwa. Uruhusu kwenye mipangilio ya faragha ya Windows, kisha ujaribu tena.",
+      "failed": "Imeshindwa kufungua kipaza sauti hiki."
+    },
+    "models": {
+      "short": "Modeli ya AI",
+      "title": "Kifurushi cha modeli ya AI",
+      "subtitle": "Modeli ya usemi huendeshwa kwenye kompyuta hii. Sauti haitoki kwenye kifaa.",
+      "download": "Pakua kifurushi cha modeli",
+      "downloadBody": "Takriban MB 460. Bora ukiwa na mtandao mzuri.",
+      "downloadOffline": "Uko nje ya mtandao — tumia USB au folda badala yake.",
+      "folder": "Pakia kutoka USB au folda",
+      "folderBody": "Chagua folda yenye model.bin na config.json (kwa mfano kutoka kwenye USB).",
+      "chooseFolder": "Chagua folda",
+      "valid": "Kifurushi cha modeli kimepatikana katika “{{folder}}”.",
+      "invalid": "Folda hii si kifurushi cha modeli. Kinakosekana: {{missing}}",
+      "note": "Usakinishaji hukamilika injini ya AI ikiandaliwa. Hadi hapo huduma za AI zimezimwa na kila kitu kingine kinafanya kazi."
+    },
+    "displays": {
+      "short": "Skrini",
+      "title": "Skrini",
+      "subtitle": "Chagua mahali skrini za hadhira na jukwaa zitaonekana.",
+      "found_one": "Skrini {{count}} imepatikana.",
+      "found_other": "Skrini {{count}} zimepatikana.",
+      "later": "Unaweza kubadilisha hili wakati wowote kwenye Skrini."
+    },
+    "import": {
+      "short": "Leta",
+      "title": "Leta nyimbo zako",
+      "subtitle": "Bandika maneno sasa; njia nyingine za kuleta zinakuja baadaye.",
+      "pasteTitle": "Bandika maneno ya wimbo",
+      "lyrics": "Maneno",
+      "lyricsHint": "Vichwa kama Verse 1, Chorus au Kiitikio hutambuliwa kiotomatiki.",
+      "detected": "Sehemu zilizotambuliwa",
+      "addSong": "Ongeza kwenye maktaba",
+      "added": "“{{title}}” imeongezwa",
+      "count_one": "Wimbo {{count}} umeongezwa",
+      "count_other": "Nyimbo {{count}} zimeongezwa",
+      "media": "Leta picha na video",
+      "mediaBody": "Picha, video na sauti zitakuja pamoja na Hifadhi ya Picha na Video."
+    },
+    "team": {
+      "short": "Timu",
+      "title": "Alika timu yako",
+      "subtitle": "Waendeshaji, wapangaji na wasanifu wanaweza kufanya kazi pamoja.",
+      "localTitle": "Kualika kunahitaji akaunti",
+      "localBody": "Uko katika Hali ya Ndani. Ongeza akaunti baadaye kwenye Mipangilio ili kualika timu yako.",
+      "add": "Ongeza",
+      "queued": "Mialiko hutumwa ukiwa mtandaoni."
+    },
+    "finish": {
+      "short": "Maliza",
+      "title": "Uko tayari",
+      "subtitle": "Jaribu ibada ya mazoezi kabla ya Jumapili.",
+      "ready": "{{church}} iko tayari.",
+      "practiceBody": "Fungua Moja kwa moja ukiwa na mpango wa mfano na ujizoeze kupeleka slaidi kwenye skrini.",
+      "practice": "Anza ibada ya mazoezi",
+      "home": "Nenda Nyumbani"
+    }
+  },
+  "planner": {
+    "templates": {
+      "sunday": "Ibada ya Jumapili",
+      "midweek": "Ibada ya katikati ya wiki",
+      "youth": "Ibada ya vijana",
+      "funeral": "Mazishi",
+      "wedding": "Harusi",
+      "crusade": "Mkutano wa injili",
+      "vigil": "Kesha",
+      "communion": "Meza ya Bwana",
+      "baptism": "Ubatizo"
+    }
+  },
+  "transitions": {
+    "cut": "Kata",
+    "fade": "Fifia",
+    "dissolve": "Yeyusha",
+    "push": "Sukuma",
+    "slide": "Teleza",
+    "wipe": "Futa",
+    "zoom": "Kuza",
+    "blur": "Ukungu"
   }
 }

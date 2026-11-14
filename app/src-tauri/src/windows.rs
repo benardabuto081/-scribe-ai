@@ -4,8 +4,13 @@
 //! them a separate browser process from the Studio, so a hung Studio renderer cannot freeze
 //! the audience screen.
 
+use std::path::PathBuf;
+use std::time::{Duration, Instant};
+
 use serde::Serialize;
-use tauri::{AppHandle, Emitter, Manager, PhysicalPosition, WebviewUrl, WebviewWindowBuilder};
+use tauri::{AppHandle, Emitter, Manager, PhysicalPosition, WebviewUrl, WebviewWindow, WebviewWindowBuilder};
+
+use crate::selftest;
 
 pub const WINDOW_EVENT: &str = "output://window";
 
@@ -88,26 +93,11 @@ pub async fn output_open(app: AppHandle, role: String, monitor: Option<String>) 
         None => None,
     };
 
+    let t0 = Instant::now();
     let window = match app.get_webview_window(&label) {
         Some(w) => w,
-        None => {
-            let data_dir = app
-                .path()
-                .app_local_data_dir()
-                .map_err(|e| e.to_string())?
-                .join("webview-outputs");
-            let title = format!("Scribe AI — {}", if role == "audience" { "Audience" } else { "Stage" });
-            WebviewWindowBuilder::new(&app, &label, WebviewUrl::App("index.html".into()))
-                .title(title)
-                .inner_size(960.0, 540.0)
-                .min_inner_size(320.0, 180.0)
-                .background_color(tauri::window::Color(0, 0, 0, 255))
-                .data_directory(data_dir)
-                .focused(false)
-                .visible(false)
-                .build()
-                .map_err(|e| e.to_string())?
-        }
+        // Normally pre-created at startup; recreate if it was destroyed.
+        None => create_output_window(&app, &role)?,
     };
 
     match target {
@@ -124,6 +114,7 @@ pub async fn output_open(app: AppHandle, role: String, monitor: Option<String>) 
         }
     }
     window.show().map_err(|e| e.to_string())?;
+    selftest::log(format!("output_open({role}) shown in {} ms", t0.elapsed().as_millis()));
     app.emit(WINDOW_EVENT, WindowStatus { role, open: true })
         .map_err(|e| e.to_string())
 }
@@ -132,9 +123,56 @@ pub async fn output_open(app: AppHandle, role: String, monitor: Option<String>) 
 pub async fn output_close(app: AppHandle, role: String) -> Result<(), String> {
     let label = label_for(&role)?;
     if let Some(w) = app.get_webview_window(&label) {
-        w.close().map_err(|e| e.to_string())?;
+        // Hide, never destroy: the window stays pre-created and keeps its state subscription.
+        w.set_fullscreen(false).map_err(|e| e.to_string())?;
+        w.hide().map_err(|e| e.to_string())?;
     }
-    Ok(())
+    app.emit(WINDOW_EVENT, WindowStatus { role, open: false })
+        .map_err(|e| e.to_string())
+}
+
+/// Where output webviews keep their (separate) WebView2 profile. Isolated in self-test mode.
+pub fn output_data_dir(app: &AppHandle) -> Result<PathBuf, String> {
+    match selftest::profile_dir() {
+        Some(p) => Ok(p.join("webview-outputs")),
+        None => Ok(app.path().app_local_data_dir().map_err(|e| e.to_string())?.join("webview-outputs")),
+    }
+}
+
+/// Builds a hidden output window. Its own WebView2 data directory = its own browser process
+/// (ADR 0001). It loads immediately and subscribes to program state, so showing it is instant.
+pub fn create_output_window(app: &AppHandle, role: &str) -> Result<WebviewWindow, String> {
+    let label = label_for(role)?;
+    let title = format!("Scribe AI — {}", if role == "audience" { "Audience" } else { "Stage" });
+    WebviewWindowBuilder::new(app, &label, WebviewUrl::App("index.html".into()))
+        .title(title)
+        .inner_size(960.0, 540.0)
+        .min_inner_size(320.0, 180.0)
+        .background_color(tauri::window::Color(0, 0, 0, 255))
+        .data_directory(output_data_dir(app)?)
+        .focused(false)
+        .visible(false)
+        .build()
+        .map_err(|e| e.to_string())
+}
+
+/// Pre-creates hidden Audience and Stage windows shortly after startup (off the main thread, so
+/// the Studio appears first). "Open" then only positions and shows them.
+pub fn precreate_outputs(app: AppHandle) {
+    std::thread::spawn(move || {
+        std::thread::sleep(Duration::from_millis(800));
+        for role in ROLES {
+            let label = format!("output-{role}");
+            if app.get_webview_window(&label).is_some() {
+                continue;
+            }
+            let t0 = Instant::now();
+            match create_output_window(&app, role) {
+                Ok(_) => selftest::log(format!("pre-created {label} (hidden) in {} ms", t0.elapsed().as_millis())),
+                Err(e) => eprintln!("could not pre-create {label}: {e}"),
+            }
+        }
+    });
 }
 
 /// Recreates the Studio window if it was closed while outputs kept running.
@@ -145,19 +183,8 @@ pub async fn studio_reopen(app: AppHandle) -> Result<(), String> {
         w.show().map_err(|e| e.to_string())?;
         return w.set_focus().map_err(|e| e.to_string());
     }
-    let config = app
-        .config()
-        .app
-        .windows
-        .iter()
-        .find(|w| w.label == "studio")
-        .cloned()
-        .ok_or_else(|| "studio window config missing".to_string())?;
-    WebviewWindowBuilder::from_config(&app, &config)
-        .map_err(|e| e.to_string())?
-        .build()
-        .map_err(|e| e.to_string())?;
-    Ok(())
+    let studio = crate::studio_window::build_studio(&app)?;
+    crate::studio_window::fit_to_work_area(&studio)
 }
 
 #[tauri::command]

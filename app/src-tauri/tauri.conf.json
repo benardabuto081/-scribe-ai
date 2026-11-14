@@ -15,12 +15,13 @@
         "label": "studio",
         "title": "Scribe AI Studio",
         "url": "/",
-        "width": 1440,
-        "height": 900,
-        "minWidth": 1100,
-        "minHeight": 700,
-        "center": true,
-        "backgroundColor": "#07090F"
+        "width": 1280,
+        "height": 720,
+        "minWidth": 1024,
+        "minHeight": 600,
+        "backgroundColor": "#07090F",
+        "visible": false,
+        "create": false
       }
     ],
     "security": {

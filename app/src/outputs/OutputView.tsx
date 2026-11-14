@@ -7,6 +7,7 @@ import { Transitioner } from './Transitioner';
 import { formatClock, readTimer } from './timerText';
 import {
   EMPTY_OUTPUT_STATE,
+  type OutputElement,
   type OutputRole,
   type OutputState,
   type SlideContent,
@@ -123,7 +124,48 @@ function textStyle(theme: ThemeStyle): CSSProperties {
   };
 }
 
+/** Designed slide: elements positioned in % of the 1920×1080 design space; type scales with height. */
+function CanvasSlide({ elements }: { elements: OutputElement[] }) {
+  return (
+    <div className="sa-layer">
+      {elements.map((e) => (
+        <div
+          key={e.id}
+          data-slide-text={e.type === 'text' ? '' : undefined}
+          style={{
+            position: 'absolute',
+            left: `${(e.x / 1920) * 100}%`,
+            top: `${(e.y / 1080) * 100}%`,
+            width: `${(e.w / 1920) * 100}%`,
+            height: `${(e.h / 1080) * 100}%`,
+            transform: e.rotation ? `rotate(${e.rotation}deg)` : undefined,
+            background: e.style.fill,
+            borderRadius: e.style.shape === 'ellipse' ? '50%' : `${(e.style.radius / 1080) * 100}cqh`,
+            opacity: e.style.opacity,
+            color: e.style.color,
+            fontFamily: `'${e.style.fontFamily}', sans-serif`,
+            fontWeight: e.style.fontWeight,
+            fontSize: `${(e.style.fontSize / 1080) * 100}cqh`,
+            lineHeight: 1.2,
+            textAlign: e.style.align,
+            whiteSpace: 'pre-line',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent:
+              e.style.align === 'left' ? 'flex-start' : e.style.align === 'right' ? 'flex-end' : 'center',
+            textShadow: e.style.shadow ? '0 0.3cqh 1.4cqh rgb(0 0 0 / 0.55)' : undefined,
+            overflow: 'hidden',
+          }}
+        >
+          {e.type === 'text' ? e.text : null}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 const SlideText = memo(function SlideText({ slide, theme }: { slide: SlideContent; theme: ThemeStyle }) {
+  if (slide.elements && slide.elements.length > 0) return <CanvasSlide elements={slide.elements} />;
   const isScripture = slide.kind === 'scripture';
   const base = textStyle(isScripture ? { ...theme, textSize: Math.min(theme.textSize, 5.2) } : theme);
   const position: CSSProperties =
@@ -164,6 +206,28 @@ const SlideText = memo(function SlideText({ slide, theme }: { slide: SlideConten
     </div>
   );
 });
+
+/**
+ * The exact audience renderer, embeddable in the Studio (Preview / Program monitors).
+ * Sized by its parent; type scales with the frame (container query units).
+ */
+export function AudienceFrame({
+  state,
+  className,
+  label,
+  monitor,
+}: {
+  state: OutputState;
+  className?: string;
+  label?: string;
+  monitor?: string;
+}) {
+  return (
+    <div className={`sa-frame ${className ?? ''}`} aria-label={label} role="img" data-monitor={monitor}>
+      <Audience state={state} />
+    </div>
+  );
+}
 
 function Audience({ state }: { state: OutputState }) {
   const { look, transition, theme } = state;

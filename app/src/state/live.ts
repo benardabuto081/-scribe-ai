@@ -107,6 +107,7 @@ export function toSlideContent(s: LiveState, cue: CueSlide | undefined): SlideCo
     groupName: cue.groupName,
     groupColor: GROUP_COLORS[cue.groupKey],
     notes: cue.notes,
+    elements: cue.elements,
   };
 }
 

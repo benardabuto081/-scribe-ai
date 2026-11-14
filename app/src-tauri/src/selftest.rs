@@ -1,10 +1,15 @@
 //! End-to-end startup self-check, enabled with `SCRIBE_SELFTEST=1`.
 //!
-//! The Studio drives the real app (open Audience → load song → next slide) and the output window
-//! acknowledges what it actually rendered. Finally Rust closes the Studio, probes the outputs, and
-//! checks the Audience still shows the slide (acceptance criterion 5). Results print to stdout as
-//! `[selftest] ...` lines and the process exits 0 (PASS) or 1 (FAIL).
+//! Isolation: in self-test mode every webview (Studio and outputs) uses a fresh per-run profile
+//! under the system temp directory (`profile_dir`), so the test can never read or wipe the
+//! operator's real data. The path is printed at startup.
+//!
+//! The Studio drives the real app and output windows acknowledge what they actually rendered.
+//! Finally Rust closes the Studio, probes the outputs, and checks the Audience still shows the
+//! slide (acceptance criterion 5). Results print to stdout as `[selftest] ...` lines and the
+//! process exits 0 (PASS) or 1 (FAIL).
 
+use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Duration;
 
@@ -18,9 +23,26 @@ pub fn enabled() -> bool {
     std::env::var("SCRIBE_SELFTEST").map(|v| v == "1").unwrap_or(false)
 }
 
+/// Per-run isolated profile root (None outside self-test mode).
+pub fn profile_dir() -> Option<PathBuf> {
+    enabled().then(|| std::env::temp_dir().join(format!("scribe-selftest-{}", std::process::id())))
+}
+
+pub fn log(line: impl AsRef<str>) {
+    if enabled() {
+        println!("[selftest] {}", line.as_ref());
+    }
+}
+
 #[tauri::command]
 pub fn selftest_enabled() -> bool {
     enabled()
+}
+
+/// The isolated profile path, so the frontend can refuse to run the test without isolation.
+#[tauri::command]
+pub fn selftest_profile() -> Option<String> {
+    profile_dir().map(|p| p.display().to_string())
 }
 
 #[tauri::command]
@@ -68,10 +90,6 @@ pub fn on_ack(app: &AppHandle, ack: &OutputAck) {
     if !enabled() {
         return;
     }
-    println!(
-        "[selftest] ack role={} version={} rendered={:?}",
-        ack.role, ack.version, ack.rendered
-    );
     if ack.role == "audience" && PROBING.swap(false, Ordering::SeqCst) {
         let ok = ack.rendered.as_deref().is_some_and(|t| t.contains("Amazing grace"));
         if ok {
@@ -83,5 +101,20 @@ pub fn on_ack(app: &AppHandle, ack: &OutputAck) {
             println!("[selftest] RESULT FAIL");
             app.exit(1);
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn isolated_profile_is_per_process_under_temp() {
+        std::env::set_var("SCRIBE_SELFTEST", "1");
+        let dir = profile_dir().expect("profile dir in self-test mode");
+        assert!(dir.starts_with(std::env::temp_dir()));
+        assert!(dir.ends_with(format!("scribe-selftest-{}", std::process::id())));
+        std::env::remove_var("SCRIBE_SELFTEST");
+        assert!(profile_dir().is_none());
     }
 }
