@@ -1,0 +1,321 @@
+{
+  "app": {
+    "name": "Scribe AI",
+    "tagline": "Akili kwa Huduma"
+  },
+  "ds": {
+    "close": "Funga",
+    "loading": "Inapakia…",
+    "retry": "Jaribu tena",
+    "errorTitle": "Hitilafu imetokea",
+    "errorBody": "Sehemu hii ya Scribe AI haikuweza kupakia. Ibada yako haijaathirika.",
+    "comingSoon": "Inakuja hivi karibuni",
+    "plannedFor": "imepangwa kwa Awamu {{phase}}",
+    "soon": "Karibuni",
+    "angle": "Pembe",
+    "stopColor": "Rangi ya kituo {{n}}",
+    "stopPosition": "Nafasi ya kituo {{n}}",
+    "removeStop": "Ondoa kituo",
+    "addStop": "Ongeza kituo",
+    "pressKeys": "Bonyeza vitufe…",
+    "noShortcut": "Hakuna njia ya mkato"
+  },
+  "common": {
+    "new": "Mpya",
+    "cancel": "Ghairi",
+    "confirm": "Thibitisha",
+    "duplicate": "Nakili",
+    "rename": "Badilisha jina",
+    "delete": "Futa",
+    "remove": "Ondoa",
+    "disabled": "Imezimwa",
+    "search": "Tafuta",
+    "notifications": "Arifa",
+    "name": "Jina",
+    "title": "Kichwa",
+    "author": "Mwandishi",
+    "uses": "Matumizi"
+  },
+  "nav": {
+    "home": "Nyumbani",
+    "live": "Moja kwa moja",
+    "library": "Maktaba",
+    "bible": "Maandiko",
+    "songs": "Nyimbo",
+    "settings": "Mipangilio",
+    "director": "Mwongozaji",
+    "planner": "Mpangaji",
+    "editor": "Mhariri",
+    "media": "Picha na video",
+    "audio": "Sauti",
+    "templates": "Violezo",
+    "looks": "Mionekano na mandhari",
+    "props": "Vipambo",
+    "messages": "Ujumbe",
+    "timers": "Saa za kuhesabu",
+    "transitions": "Mipito",
+    "macros": "Makro",
+    "timeline": "Mstari wa wakati",
+    "video": "Video ya moja kwa moja",
+    "stage": "Skrini ya jukwaa",
+    "screens": "Skrini",
+    "remote": "Rimoti na API",
+    "ai": "Ubongo wa AI",
+    "post": "Baada ya ibada",
+    "analytics": "Takwimu",
+    "team": "Timu",
+    "audit": "Kumbukumbu za shughuli",
+    "help": "Msaada",
+    "search": "Tafuta",
+    "allModules": "Moduli zote",
+    "sections": {
+      "run": "Endesha",
+      "content": "Maudhui",
+      "production": "Uzalishaji",
+      "intelligence": "Akili",
+      "admin": "Utawala"
+    }
+  },
+  "status": {
+    "live": "HEWANI",
+    "online": "Mtandaoni",
+    "mic": "Kiwango cha kipaza sauti",
+    "engine": {
+      "connected": "Injini imeunganishwa",
+      "starting": "Injini inaanza",
+      "down": "Injini imezimika"
+    }
+  },
+  "ai": {
+    "mode": "Hali ya AI",
+    "modes": {
+      "manual": "Mkono",
+      "assist": "Saidia",
+      "auto": "Otomatiki"
+    },
+    "pausedToast": "AI imesimamishwa — haitachukua hatua hadi uiendeleze",
+    "resumedToast": "AI imeendelea"
+  },
+  "settings": {
+    "theme": "Mandhari",
+    "density": "Msongamano",
+    "themes": {
+      "dark": "Giza",
+      "light": "Mwanga",
+      "hc": "Utofautishaji wa juu"
+    },
+    "densities": {
+      "comfortable": "Nafasi",
+      "compact": "Kubana"
+    }
+  },
+  "groups": {
+    "verse": "Ubeti",
+    "chorus": "Kiitikio",
+    "bridge": "Daraja",
+    "preChorus": "Kabla ya kiitikio",
+    "intro": "Utangulizi",
+    "outro": "Hitimisho",
+    "tag": "Kiambatisho",
+    "interlude": "Kipindi cha kati",
+    "sermonPoint": "Hoja ya mahubiri",
+    "scripture": "Andiko",
+    "announcement": "Tangazo",
+    "custom": "Maalum"
+  },
+  "live": {
+    "take": "Onyesha"
+  },
+  "palette": {
+    "title": "Orodha ya amri",
+    "description": "Tafuta na endesha amri yoyote",
+    "placeholder": "Andika amri au tafuta…",
+    "empty": "Hakuna amri inayolingana",
+    "goTo": "Nenda",
+    "failed": "Amri imeshindwa"
+  },
+  "styleguide": {
+    "title": "Mfumo wa usanifu",
+    "subtitle": "Mwongozo hai wa mtindo — kila alama, kijenzi na hali",
+    "brand": "Chapa",
+    "color": "Rangi",
+    "typography": "Mwandiko",
+    "sampleDisplay": "Abudu katika roho na kweli",
+    "sampleHeading": "Ibada ya Jumapili — Saa 3:00 asubuhi",
+    "sampleBody": "Scribe AI husikiliza ibada na kumsaidia mwendeshaji kuonyesha andiko na maneno ya wimbo sahihi kwa wakati sahihi.",
+    "sampleCaption": "Ilihaririwa dakika 2 zilizopita",
+    "buttons": "Vitufe",
+    "brandAction": "Uliza Scribe",
+    "inputs": "Sehemu za kuingiza",
+    "hint": "Muundo wowote wa rejea unakubalika.",
+    "searchPlaceholder": "Tafuta nyimbo, maandiko, picha…",
+    "withError": "Rejea",
+    "errorText": "Mathayo 3 ina mistari 17.",
+    "select": "Tafsiri",
+    "textarea": "Maelezo",
+    "switch": "Songa mbele kiotomatiki",
+    "slider": "Sauti",
+    "pickers": "Vichaguzi",
+    "font": "Fonti",
+    "shortcut": "Njia ya mkato",
+    "badges": "Beji, vibandiko na mita",
+    "neutral": "Kawaida",
+    "accent": "Msisitizo",
+    "selected": "Imechaguliwa",
+    "filter": "Chuja",
+    "meter": "Uhakika",
+    "overlays": "Tabaka za juu",
+    "openDialog": "Fungua kidirisha",
+    "openDrawer": "Fungua droo",
+    "openPopover": "Fungua kidukizo",
+    "popoverBody": "Vidukizo hubeba vidhibiti vidogo vilivyolenga jambo moja.",
+    "showToast": "Onyesha arifa",
+    "toastTitle": "Imehifadhiwa kwenye orodha",
+    "openPalette": "Fungua orodha ya amri",
+    "rightClick": "Bofya kulia hapa",
+    "dialogTitle": "Badilisha jina la wasilisho",
+    "dialogBody": "Chagua jina wazi ambalo timu yako italitambua.",
+    "drawerTitle": "Mkaguzi",
+    "drawerBody": "Droo hubeba maelezo ya ziada bila kuondoka kwenye skrini.",
+    "paletteA": "Onyesha slaidi inayofuata",
+    "paletteB": "Fungua maktaba",
+    "paletteC": "Wimbo mpya",
+    "tabs": "Vichupo",
+    "tabOne": "Maudhui ya kichupo cha Maandiko.",
+    "tabTwo": "Maudhui ya kichupo cha Nyimbo.",
+    "data": "Mionekano ya data",
+    "allLibraries": "Maktaba zote",
+    "worship": "Kuabudu",
+    "sermons": "Mahubiri",
+    "thumbs": "Vijipicha",
+    "slide": "Slaidi",
+    "timeline": "Mstari wa wakati",
+    "slides": "Slaidi",
+    "audio": "Sauti",
+    "layout": "Vigawanyo (buruta au tumia vitufe vya mishale; mpangilio huhifadhiwa)",
+    "states": "Hali za skrini",
+    "emptyTitle": "Bado hakuna nyimbo",
+    "emptyBody": "Bandika maneno ya wimbo au leta folda ili kujenga maktaba yako ya nyimbo.",
+    "populated": "Imejazwa",
+    "populatedSub": "Maudhui yamepakiwa"
+  },
+  "cmd": {
+    "group": {
+      "slide": "Slaidi",
+      "screen": "Skrini",
+      "look": "Mwonekano",
+      "scripture": "Maandiko",
+      "song": "Nyimbo",
+      "playlist": "Orodha",
+      "timer": "Saa za kuhesabu",
+      "message": "Ujumbe",
+      "prop": "Vipambo",
+      "macro": "Makro",
+      "media": "Picha na video",
+      "audio": "Sauti",
+      "ai": "AI",
+      "output": "Skrini za matokeo",
+      "app": "Programu"
+    },
+    "slide": {
+      "trigger": "Onyesha slaidi",
+      "take": "Peleka hakikisho hewani",
+      "next": "Slaidi inayofuata",
+      "previous": "Slaidi iliyotangulia",
+      "preview": "Hakiki slaidi",
+      "clear": "Futa maandishi ya slaidi"
+    },
+    "transition": {
+      "set": "Weka mpito"
+    },
+    "screen": {
+      "clear": "Futa tabaka zote",
+      "clearLayer": "Futa tabaka",
+      "blackout": "Giza kamili (washa/zima)",
+      "logo": "Onyesha nembo (washa/zima)"
+    },
+    "look": {
+      "apply": "Tumia mwonekano"
+    },
+    "background": {
+      "set": "Weka mandharinyuma"
+    },
+    "theme": {
+      "apply": "Tumia mandhari"
+    },
+    "scripture": {
+      "show": "Onyesha andiko",
+      "load": "Pakia andiko kwa hakikisho"
+    },
+    "song": {
+      "load": "Pakia wimbo"
+    },
+    "presentation": {
+      "open": "Fungua wasilisho kwenye Moja kwa moja"
+    },
+    "playlist": {
+      "select": "Chagua orodha",
+      "selectItem": "Chagua kipengele cha orodha",
+      "nextItem": "Kipengele kinachofuata",
+      "previousItem": "Kipengele kilichotangulia"
+    },
+    "timer": {
+      "start": "Anzisha saa",
+      "stop": "Simamisha saa",
+      "reset": "Weka upya saa",
+      "addTime": "Ongeza muda",
+      "setVisibility": "Weka uonekano wa saa"
+    },
+    "message": {
+      "show": "Onyesha ujumbe",
+      "hide": "Ficha ujumbe"
+    },
+    "stage": {
+      "message": "Tuma ujumbe jukwaani"
+    },
+    "prop": {
+      "toggle": "Washa/zima kipambo",
+      "clearAll": "Ondoa vipambo vyote"
+    },
+    "media": {
+      "play": "Cheza picha/video",
+      "stop": "Simamisha picha/video"
+    },
+    "audio": {
+      "play": "Cheza sauti",
+      "stop": "Simamisha sauti",
+      "fade": "Fifisha sauti"
+    },
+    "macro": {
+      "run": "Endesha makro"
+    },
+    "service": {
+      "setState": "Weka hali ya ibada"
+    },
+    "ai": {
+      "setMode": "Weka hali ya AI",
+      "pause": "Simamisha AI",
+      "resume": "Endeleza AI",
+      "togglePause": "Simamisha / endeleza AI",
+      "propose": "Pendekezo la AI",
+      "approve": "Kubali pendekezo la AI",
+      "dismiss": "Kataa pendekezo la AI",
+      "undoLast": "Tendua hatua ya mwisho ya AI"
+    },
+    "app": {
+      "navigate": "Nenda kwenye skrini",
+      "openPalette": "Fungua orodha ya amri",
+      "undo": "Tendua",
+      "setTheme": "Badilisha mandhari",
+      "setLanguage": "Badilisha lugha",
+      "toggleInspector": "Onyesha/ficha mkaguzi"
+    },
+    "output": {
+      "open": "Fungua dirisha la matokeo",
+      "close": "Funga dirisha la matokeo",
+      "assignDisplay": "Panga skrini",
+      "testPattern": "Mchoro wa majaribio (washa/zima)",
+      "identify": "Tambua skrini"
+    }
+  }
+}

@@ -1,0 +1,226 @@
+import type { LucideIcon } from 'lucide-react';
+import {
+  Activity,
+  BarChart3,
+  BookOpen,
+  Brain,
+  CalendarClock,
+  Clapperboard,
+  Clock,
+  FileAudio,
+  FolderOpen,
+  GalleryVerticalEnd,
+  HelpCircle,
+  Home,
+  Images,
+  Layers,
+  LayoutTemplate,
+  ListVideo,
+  MessageSquareText,
+  MonitorSmartphone,
+  Music,
+  PenTool,
+  Radio,
+  ScreenShare,
+  Search,
+  Settings,
+  Smartphone,
+  Sticker,
+  Users,
+  Video,
+  Wand2,
+  Zap,
+} from 'lucide-react';
+
+export type NavSection = 'run' | 'content' | 'production' | 'intelligence' | 'admin';
+
+export type NavItem = {
+  id: string;
+  path: string;
+  labelKey: string;
+  icon: LucideIcon;
+  section: NavSection;
+  /** Shown directly in the left rail (others live under "All modules"). */
+  pinned?: boolean;
+  spec: string; // SPEC.md section
+};
+
+/** Every Studio module from SPEC section 4. The left rail, palette and router all derive from this. */
+export const NAV_ITEMS: NavItem[] = [
+  { id: 'home', path: '/home', labelKey: 'nav.home', icon: Home, section: 'run', pinned: true, spec: '4.1' },
+  { id: 'live', path: '/live', labelKey: 'nav.live', icon: Radio, section: 'run', pinned: true, spec: '4.5' },
+  {
+    id: 'planner',
+    path: '/planner',
+    labelKey: 'nav.planner',
+    icon: CalendarClock,
+    section: 'run',
+    pinned: true,
+    spec: '4.4',
+  },
+  {
+    id: 'library',
+    path: '/library',
+    labelKey: 'nav.library',
+    icon: FolderOpen,
+    section: 'content',
+    pinned: true,
+    spec: '4.2',
+  },
+  {
+    id: 'editor',
+    path: '/editor',
+    labelKey: 'nav.editor',
+    icon: PenTool,
+    section: 'content',
+    pinned: true,
+    spec: '4.3',
+  },
+  {
+    id: 'songs',
+    path: '/songs',
+    labelKey: 'nav.songs',
+    icon: Music,
+    section: 'content',
+    pinned: true,
+    spec: '4.17',
+  },
+  {
+    id: 'bible',
+    path: '/bible',
+    labelKey: 'nav.bible',
+    icon: BookOpen,
+    section: 'content',
+    pinned: true,
+    spec: '4.16',
+  },
+  {
+    id: 'media',
+    path: '/media',
+    labelKey: 'nav.media',
+    icon: Images,
+    section: 'content',
+    pinned: true,
+    spec: '4.10',
+  },
+  { id: 'audio', path: '/audio', labelKey: 'nav.audio', icon: FileAudio, section: 'content', spec: '4.11' },
+  {
+    id: 'templates',
+    path: '/templates',
+    labelKey: 'nav.templates',
+    icon: LayoutTemplate,
+    section: 'content',
+    pinned: true,
+    spec: '4.6 / 5',
+  },
+  { id: 'looks', path: '/looks', labelKey: 'nav.looks', icon: Layers, section: 'production', spec: '4.6' },
+  { id: 'props', path: '/props', labelKey: 'nav.props', icon: Sticker, section: 'production', spec: '4.7' },
+  {
+    id: 'messages',
+    path: '/messages',
+    labelKey: 'nav.messages',
+    icon: MessageSquareText,
+    section: 'production',
+    spec: '4.8',
+  },
+  { id: 'timers', path: '/timers', labelKey: 'nav.timers', icon: Clock, section: 'production', spec: '4.9' },
+  {
+    id: 'transitions',
+    path: '/transitions',
+    labelKey: 'nav.transitions',
+    icon: Wand2,
+    section: 'production',
+    spec: '4.13',
+  },
+  { id: 'macros', path: '/macros', labelKey: 'nav.macros', icon: Zap, section: 'production', spec: '4.14' },
+  {
+    id: 'timeline',
+    path: '/timeline',
+    labelKey: 'nav.timeline',
+    icon: GalleryVerticalEnd,
+    section: 'production',
+    spec: '4.15',
+  },
+  { id: 'video', path: '/video', labelKey: 'nav.video', icon: Video, section: 'production', spec: '4.12' },
+  {
+    id: 'stage',
+    path: '/stage',
+    labelKey: 'nav.stage',
+    icon: MonitorSmartphone,
+    section: 'production',
+    spec: '4.18',
+  },
+  {
+    id: 'screens',
+    path: '/screens',
+    labelKey: 'nav.screens',
+    icon: ScreenShare,
+    section: 'production',
+    pinned: true,
+    spec: '4.19',
+  },
+  {
+    id: 'director',
+    path: '/director',
+    labelKey: 'nav.director',
+    icon: Clapperboard,
+    section: 'production',
+    spec: '4.20',
+  },
+  {
+    id: 'remote',
+    path: '/remote',
+    labelKey: 'nav.remote',
+    icon: Smartphone,
+    section: 'production',
+    spec: '4.21',
+  },
+  {
+    id: 'ai',
+    path: '/ai',
+    labelKey: 'nav.ai',
+    icon: Brain,
+    section: 'intelligence',
+    pinned: true,
+    spec: '4.22',
+  },
+  {
+    id: 'post',
+    path: '/post-service',
+    labelKey: 'nav.post',
+    icon: ListVideo,
+    section: 'intelligence',
+    spec: '4.23',
+  },
+  {
+    id: 'analytics',
+    path: '/analytics',
+    labelKey: 'nav.analytics',
+    icon: BarChart3,
+    section: 'intelligence',
+    spec: '4.24',
+  },
+  { id: 'team', path: '/team', labelKey: 'nav.team', icon: Users, section: 'admin', spec: '4.25' },
+  { id: 'audit', path: '/audit', labelKey: 'nav.audit', icon: Activity, section: 'admin', spec: 'CLAUDE.md' },
+  {
+    id: 'settings',
+    path: '/settings',
+    labelKey: 'nav.settings',
+    icon: Settings,
+    section: 'admin',
+    spec: '4.27',
+  },
+  { id: 'help', path: '/help', labelKey: 'nav.help', icon: HelpCircle, section: 'admin', spec: '4.28' },
+];
+
+export const NAV_SECTIONS: NavSection[] = ['run', 'content', 'production', 'intelligence', 'admin'];
+
+/** Not a module itself (§4.26 Search is the Ctrl+K palette + this screen). */
+export const SEARCH_ITEM: NavItem = {
+  id: 'search',
+  path: '/search',
+  labelKey: 'nav.search',
+  icon: Search,
+  section: 'run',
+  spec: '4.26',
+};

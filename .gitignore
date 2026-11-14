@@ -1,3 +1,10 @@
+# Node / frontend
+node_modules/
+app/dist/
+
+# Rust / Tauri
+target/
+
 # Python
 __pycache__/
 *.pyc
