@@ -7,6 +7,9 @@ import { useUi } from '@/state/ui';
 /**
  * End-to-end startup self-check (desktop only), enabled with `SCRIBE_SELFTEST=1`:
  *
+ *   F. Fresh profile: clear stored state, reload → splash → sign-in → Local Mode → every wizard
+ *      step (Next / Skip) → Finish → app shell.
+ *   0. The Studio window fits its monitor's work area and the bottom strip is visible.
  *   1. Ctrl+K palette: type "screens" → the top result must be "Go to → Screens"; Enter navigates.
  *   2. Click the real "Open" button on the Audience card → the Audience window must open and ack.
  *   3. Ctrl+K palette: "Amazing Grace" → Enter loads the song; Arrow Right takes slide 1.
@@ -68,6 +71,28 @@ async function paletteRun(query: string, expectTop: RegExp) {
   pressKey(input, 'Enter');
 }
 
+const FRESH_FLAG = 'scribe-selftest-fresh';
+
+function selftestButton(id: string) {
+  return document.querySelector<HTMLButtonElement>(`[data-selftest="${id}"]`);
+}
+
+async function clickSelftest(id: string) {
+  const b = await waitFor(`button [data-selftest="${id}"] on ${location.hash}`, () => {
+    const el = selftestButton(id);
+    return el && !el.disabled ? el : null;
+  });
+  b.click();
+}
+
+/** Sets a React-controlled input's value the way typing does. */
+function typeInto(selector: string, text: string) {
+  const input = document.querySelector<HTMLInputElement>(selector);
+  if (!input) throw new Error(`input ${selector} not found`);
+  Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set?.call(input, text);
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
 let started = false;
 
 export async function runSelfTestIfEnabled(): Promise<void> {
@@ -77,8 +102,95 @@ export async function runSelfTestIfEnabled(): Promise<void> {
   const enabled = await invokeChecked<boolean>('selftest_enabled').catch(() => false);
   if (!enabled) return;
   try {
-    await sleep(1500);
-    await report('start');
+    // F. Fresh start: wipe this app's stored state once per self-test run, then reload.
+    if (!sessionStorage.getItem(FRESH_FLAG)) {
+      Object.keys(localStorage)
+        .filter((k) => k.startsWith('scribe.'))
+        .forEach((k) => localStorage.removeItem(k));
+      sessionStorage.setItem(FRESH_FLAG, '1');
+      await report('fresh start: cleared stored session, license, wizard and settings; reloading');
+      location.hash = '#/splash';
+      location.reload();
+      return;
+    }
+    // Surface page errors in the log (an exception must never look like a silent no-op).
+    window.addEventListener('error', (e) => void report(`page error: ${e.message}`));
+    window.addEventListener('hashchange', () => void report(`→ ${location.hash}`));
+    document.addEventListener(
+      'submit',
+      (e) => void report(`form submit on ${location.hash} (defaultPrevented=${e.defaultPrevented})`),
+      true,
+    );
+    window.addEventListener(
+      'unhandledrejection',
+      (e) => void report(`unhandled rejection: ${String(e.reason)}`),
+    );
+    const origError = console.error;
+    console.error = (...args: unknown[]) => {
+      void report(`console.error: ${args.map(String).join(' ').slice(0, 300)}`);
+      origError(...args);
+    };
+    await sleep(800);
+    await report('start (fresh profile)');
+
+    // F1. Splash → sign-in → Local Mode (fully offline).
+    await waitFor('splash to route to sign-in', () => location.hash === '#/auth/sign-in');
+    await clickSelftest('local-mode');
+    await waitFor('wizard to open', () => document.querySelector('form[data-step="church"]'));
+    await report('splash → sign-in → Continue in Local Mode → wizard');
+
+    // F2. Wizard: fill the required church name, then Next/Skip through every step.
+    await waitFor('church name field', () => document.querySelector('[data-selftest="church-name"]'));
+    typeInto('[data-selftest="church-name"]', 'Selftest Fellowship');
+    await waitFor('Next to enable', () => !selftestButton('wizard-next')?.disabled);
+    const seen: string[] = [];
+    for (let guard = 0; guard < 12 && location.hash !== '#/onboarding/finish'; guard++) {
+      const before = location.hash;
+      seen.push(before.replace('#/onboarding/', ''));
+      const btn = await waitFor(`an enabled Next/Skip on ${before}`, () => {
+        const b = selftestButton('wizard-skip') ?? selftestButton('wizard-next');
+        return b && !b.disabled ? b : null;
+      });
+      btn.click();
+      await waitFor(`wizard to leave ${before}`, () => location.hash !== before);
+      // React Router renders navigations as transitions: wait until the *screen* shows the new step.
+      const target = location.hash.replace('#/onboarding/', '');
+      await waitFor(`step "${target}" to render`, () =>
+        document.querySelector(`form[data-step="${target}"]`),
+      );
+    }
+    await report(`wizard steps: ${seen.join(' → ')} → finish`);
+    await clickSelftest('finish-home');
+    await waitFor(
+      'app shell after onboarding',
+      () => location.hash === '#/home' && document.querySelector('footer'),
+    );
+    await report('wizard finished → app shell (#/home)');
+
+    // 0. The Studio window must fit inside its monitor's work area (taskbar excluded, DPI-aware).
+    type Fit = {
+      fits: boolean;
+      maximized: boolean;
+      minimized: boolean;
+      scale: number;
+      outer: number[];
+      workArea: number[];
+    };
+    let fit = await invokeChecked<Fit>('studio_window_fit');
+    if (fit.minimized) {
+      // Someone minimized the window during the run: restore + re-fit, then measure for real.
+      await report('studio window was minimized; restoring and re-fitting');
+      await invokeChecked('studio_window_refit');
+      await sleep(500);
+      fit = await invokeChecked<Fit>('studio_window_fit');
+    }
+    await report(
+      `studio window outer=${fit.outer.join(',')} workArea=${fit.workArea.join(',')} scale=${fit.scale} maximized=${fit.maximized}`,
+    );
+    if (!fit.fits) throw new Error('studio window is larger than the visible work area');
+    const strip = document.querySelector('footer')?.getBoundingClientRect();
+    if (!strip || strip.bottom > window.innerHeight + 1) throw new Error('bottom strip is not visible');
+    await report('studio window fits the work area; bottom strip visible');
 
     // 1. Palette ranking + navigation.
     await paletteRun('screens', /Screens/);

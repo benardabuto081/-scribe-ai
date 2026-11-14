@@ -25,6 +25,8 @@ let navigate: (path: string) => void = () => undefined;
 export function setNavigator(fn: (path: string) => void) {
   navigate = fn;
 }
+/** For command handlers that need to change screen. */
+export const navigateTo = (path: string) => navigate(path);
 
 const role = z.enum(OUTPUT_ROLES);
 

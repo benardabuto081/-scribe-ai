@@ -6,7 +6,32 @@ import type { GroupColorKey } from '@/design-system/tokens/tokens';
 
 export type Id = string;
 
-export type Slide = { id: Id; text: string; notes?: string; label?: string };
+/** A positioned object on the slide canvas. Coordinates are in a 1920×1080 design space. */
+export type SlideElement = {
+  id: Id;
+  type: 'text' | 'shape';
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  rotation: number;
+  text?: string;
+  style: {
+    fontFamily: string;
+    fontSize: number; // px at 1080p
+    fontWeight: number;
+    color: string;
+    align: 'left' | 'center' | 'right';
+    fill: string; // 'transparent' for none
+    shape: 'rect' | 'ellipse';
+    radius: number;
+    opacity: number; // 0..1
+    shadow: boolean;
+  };
+};
+
+/** Slides with `elements` render as a designed canvas; otherwise `text` renders with the theme. */
+export type Slide = { id: Id; text: string; notes?: string; label?: string; elements?: SlideElement[] };
 
 export type SlideGroup = { id: Id; key: GroupColorKey; name: string; slides: Slide[] };
 
@@ -33,6 +58,8 @@ export type Presentation = {
   key?: string;
   bpm?: number;
   usageCount?: number;
+  /** Set when moved to trash (restorable). */
+  deletedAt?: string;
 };
 
 export type Library = {
@@ -47,6 +74,7 @@ export type CueSlide = {
   id: Id; // unique within the sequence (groupId:slideId:n)
   slideId: Id;
   text: string;
+  elements?: SlideElement[];
   notes?: string;
   groupId: Id;
   groupName: string;
@@ -70,6 +98,7 @@ export function sequenceOf(p: Presentation): CueSlide[] {
         slideId: s.id,
         text: s.text,
         notes: s.notes,
+        elements: s.elements,
         groupId: g.id,
         groupName: g.name,
         groupKey: g.key,
@@ -101,6 +130,8 @@ export type Playlist = {
   startTime?: string;
   items: PlaylistItem[];
   templateId?: Id;
+  /** Sermon outline attached to the plan (feeds the AI's expectations in Phase C). */
+  outline?: string;
 };
 
 export type ServiceState = 'preService' | 'worship' | 'sermon' | 'prayer' | 'announcements';

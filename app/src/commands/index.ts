@@ -14,6 +14,8 @@ import { contentCommands } from './defs/content';
 import { overlayCommands } from './defs/overlays';
 import { aiCommands } from './defs/ai';
 import { appCommands, setNavigator } from './defs/app';
+import { libraryCommands } from './defs/library';
+import { sessionCommands } from './defs/session';
 import { useAi } from '@/state/ai';
 import { useSession } from '@/state/session';
 import type { CommandDef } from './types';
@@ -32,6 +34,8 @@ export function initCommands(): void {
       ...overlayCommands,
       ...aiCommands,
       ...appCommands,
+      ...libraryCommands,
+      ...sessionCommands,
     ] as CommandDef[]),
   );
 
