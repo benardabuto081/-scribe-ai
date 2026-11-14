@@ -1,26 +1,30 @@
 import { useEffect } from 'react';
-import { createHashRouter, RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { Toaster, TooltipProvider } from '@/design-system';
-import { StyleGuide } from '@/design-system/styleguide/StyleGuide';
 import { applyAppearance, useSettings } from '@/state/settings';
 import { initCommands, setNavigator } from '@/commands';
 import { installKeyboard } from '@/commands/keyboard';
 import { CommandPaletteHost } from '@/commands/CommandPaletteHost';
+import { createAppRouter } from '@/app/router';
+import { installOutputWindowTracking } from '@/outputs/windows';
+import { installCommandFeedback } from '@/commands/feedback';
+import { runSelfTestIfEnabled } from '@/app/selftest';
 
 // Apply persisted appearance before first paint, and register every command.
 applyAppearance(useSettings.getState());
 initCommands();
 
-// Hash routing works identically from the Vite dev server and Tauri's bundled assets,
-// and lets output windows open at index.html#/output/<role>.
-const router = createHashRouter([
-  { path: '/', element: <StyleGuide /> },
-  { path: '/design-system', element: <StyleGuide /> },
-]);
+const router = createAppRouter();
 setNavigator((path) => void router.navigate(path));
 
+/** The Studio (operator) application. Output windows render `OutputApp` instead (see main.tsx). */
 export function App() {
   useEffect(() => installKeyboard(), []);
+  useEffect(() => installOutputWindowTracking(), []);
+  useEffect(() => installCommandFeedback(), []);
+  useEffect(() => {
+    void runSelfTestIfEnabled();
+  }, []);
   return (
     <TooltipProvider delayDuration={350}>
       <RouterProvider router={router} />

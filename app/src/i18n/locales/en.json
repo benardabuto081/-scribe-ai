@@ -84,6 +84,24 @@
       "connected": "Engine connected",
       "starting": "Engine starting",
       "down": "Engine down"
+    },
+    "serviceState": "Service state",
+    "aiConfidence": "Confidence of the latest AI suggestion",
+    "pause": "Pause AI",
+    "aiPaused": "AI paused",
+    "aiUnavailable": "AI offline",
+    "micUnavailable": "Microphone level appears when the AI engine is connected",
+    "offline": "Offline",
+    "blackout": "BLACKOUT",
+    "offAir": "Off air",
+    "activeLook": "Active look",
+    "mock": "Mock",
+    "partial": "Partial",
+    "done": "Done",
+    "engineShort": {
+      "connected": "Engine",
+      "starting": "Starting",
+      "down": "Engine down"
     }
   },
   "ai": {
@@ -317,5 +335,68 @@
       "testPattern": "Toggle test pattern",
       "identify": "Identify screen"
     }
+  },
+  "shell": {
+    "mainNav": "Main navigation",
+    "statusBar": "Status bar",
+    "searchOrCommand": "Search or run a command…",
+    "audience": "Audience",
+    "stage": "Stage",
+    "audienceOutput": "Audience output window",
+    "stageOutput": "Stage display window",
+    "open": "open",
+    "closed": "closed",
+    "lastCommand": "Last:",
+    "specRef": "SPEC §{{spec}}"
+  },
+  "service": {
+    "states": {
+      "preService": "Pre-service",
+      "worship": "Worship",
+      "sermon": "Sermon",
+      "prayer": "Prayer",
+      "announcements": "Announcements"
+    }
+  },
+  "sources": {
+    "ui": "Click",
+    "keyboard": "Keyboard",
+    "midi": "MIDI",
+    "remote": "Remote",
+    "macro": "Macro",
+    "ai": "AI",
+    "system": "System"
+  },
+  "stage": {
+    "current": "Now",
+    "next": "Next",
+    "noTimers": "No timers running",
+    "audienceBlack": "Audience screen is BLACK",
+    "audienceLogo": "Audience screen shows LOGO"
+  },
+  "screens": {
+    "subtitle": "Detect displays and assign Audience and Stage outputs",
+    "detect": "Detect displays",
+    "arrangement": "Display arrangement",
+    "arrangementSub": "As reported by Windows",
+    "noneTitle": "No displays detected",
+    "noneBody": "Connect a projector or TV, then press Detect displays.",
+    "primary": "Primary",
+    "display": "Display",
+    "windowed": "Window on this screen (preview)",
+    "open": "Open",
+    "close": "Close",
+    "testPattern": "Test pattern",
+    "browserNote": "Running in a browser: outputs open as popup windows. Display assignment needs the desktop app.",
+    "isolationTitle": "Output isolation",
+    "isolationBody": "Output windows run in their own browser process and keep showing the last state if the Studio window is closed or frozen. Press Ctrl+Shift+S on an output to reopen the Studio."
+  },
+  "errors": {
+    "commandFailed": "{{command}} failed",
+    "outputSync": "Output windows did not receive the latest state"
+  },
+  "bible": {
+    "sampleOnlyTitle": "Bible database not connected",
+    "sampleOnlyBody": "Showing built-in sample verses only"
   }
 }

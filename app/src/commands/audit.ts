@@ -5,7 +5,8 @@ export type AuditEntry = {
   id: number;
   at: number; // epoch ms
   commandId: string;
-  source: CommandSource;
+  /** "system" marks non-command failures (e.g. output sync) so they are never silent. */
+  source: CommandSource | 'system';
   args: unknown;
   status: 'ok' | 'error' | 'undone';
   errorCode?: CommandErrorCode;
@@ -42,6 +43,21 @@ export const useAudit = create<AuditState>((set) => ({
     set((s) => ({ entries: s.entries.map((x) => (x.id === id ? { ...x, status: 'undone' } : x)) })),
   clear: () => set({ entries: [] }),
 }));
+
+/** Records a failure that did not come from a command (e.g. a native call made by the Studio). */
+export function recordSystemError(name: string, message: string): void {
+  useAudit.getState().append({
+    at: Date.now(),
+    commandId: 'system.' + name,
+    source: 'system',
+    args: null,
+    status: 'error',
+    errorCode: 'handler_error',
+    errorMessage: message,
+    durationMs: 0,
+    undoable: false,
+  });
+}
 
 export function exportAuditJson(): string {
   return JSON.stringify(useAudit.getState().entries, null, 2);

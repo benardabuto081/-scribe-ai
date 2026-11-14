@@ -1,0 +1,220 @@
+/*
+ * Output-window rendering. Uses container query units (cqh/cqw) so text scales with any
+ * resolution and aspect ratio. Animations touch only opacity/transform/filter (60 fps on iGPU).
+ */
+.sa-output {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  overflow: hidden;
+  cursor: none;
+  container-type: size;
+  color: #fff;
+  user-select: none;
+}
+.sa-output--windowed {
+  cursor: default;
+}
+.sa-layer {
+  position: absolute;
+  inset: 0;
+}
+
+/* ---------- transitions ---------- */
+.sa-tr-layer {
+  position: absolute;
+  inset: 0;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  animation-fill-mode: both;
+  will-change: opacity, transform;
+}
+.sa-tr-fade.sa-tr-in,
+.sa-tr-dissolve.sa-tr-in {
+  animation-name: sa-tr-fade-in;
+}
+.sa-tr-fade.sa-tr-out {
+  animation-name: sa-tr-fade-out;
+}
+.sa-tr-dissolve.sa-tr-out {
+  animation-name: sa-tr-fade-out;
+  animation-timing-function: linear;
+}
+.sa-tr-push.sa-tr-in {
+  animation-name: sa-tr-push-in;
+}
+.sa-tr-push.sa-tr-out {
+  animation-name: sa-tr-push-out;
+}
+.sa-tr-slide.sa-tr-in {
+  animation-name: sa-tr-slide-in;
+}
+.sa-tr-slide.sa-tr-out {
+  animation-name: sa-tr-fade-out;
+}
+.sa-tr-wipe.sa-tr-in {
+  animation-name: sa-tr-wipe-in;
+}
+.sa-tr-wipe.sa-tr-out {
+  animation-name: sa-tr-hold;
+}
+.sa-tr-zoom.sa-tr-in {
+  animation-name: sa-tr-zoom-in;
+}
+.sa-tr-zoom.sa-tr-out {
+  animation-name: sa-tr-zoom-out;
+}
+.sa-tr-blur.sa-tr-in {
+  animation-name: sa-tr-blur-in;
+}
+.sa-tr-blur.sa-tr-out {
+  animation-name: sa-tr-blur-out;
+}
+
+@keyframes sa-tr-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes sa-tr-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes sa-tr-hold {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes sa-tr-push-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes sa-tr-push-out {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes sa-tr-slide-in {
+  from {
+    transform: translateY(8%);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes sa-tr-wipe-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes sa-tr-zoom-in {
+  from {
+    transform: scale(1.08);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes sa-tr-zoom-out {
+  from {
+    transform: none;
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+}
+@keyframes sa-tr-blur-in {
+  from {
+    filter: blur(12px);
+    opacity: 0;
+  }
+  to {
+    filter: none;
+    opacity: 1;
+  }
+}
+@keyframes sa-tr-blur-out {
+  from {
+    filter: none;
+    opacity: 1;
+  }
+  to {
+    filter: blur(12px);
+    opacity: 0;
+  }
+}
+
+/* Slow drift for "animated" procedural backgrounds; static under reduced motion / low power. */
+.sa-bg-animated {
+  background-size: 140% 140% !important;
+  animation: sa-bg-drift 24s ease-in-out infinite alternate;
+}
+@keyframes sa-bg-drift {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 100% 100%;
+  }
+}
+
+/* ---------- props ---------- */
+.sa-prop-enter {
+  animation: sa-prop-in 420ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+@keyframes sa-prop-in {
+  from {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes sa-flash {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+.sa-flash {
+  animation: sa-flash 1s steps(2, jump-none) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sa-tr-layer,
+  .sa-bg-animated,
+  .sa-prop-enter,
+  .sa-flash {
+    animation: none !important;
+  }
+}

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListMusic, Music, Palette, Zap } from 'lucide-react';
-import { CommandPalette, toast, type PaletteItem } from '@/design-system';
+import { CommandPalette, type PaletteItem } from '@/design-system';
 import { useUi } from '@/state/ui';
 import { useLibrary } from '@/state/library';
 import { NAV_ITEMS } from '@/app/nav';
@@ -37,14 +37,21 @@ export function CommandPaletteHost() {
           group: t(`cmd.group.${c.category}`),
           icon: c.icon,
           shortcut: shortcutFor(c.id),
-          keywords: [c.id],
+          keywords: [],
         },
         { commandId: c.id, args: {} },
       );
     }
     for (const n of NAV_ITEMS) {
       add(
-        { id: `nav:${n.path}`, label: t(n.labelKey), group: t('palette.goTo'), icon: n.icon, hint: n.path },
+        {
+          id: `nav:${n.path}`,
+          label: t(n.labelKey),
+          group: t('palette.goTo'),
+          boost: 0.05,
+          icon: n.icon,
+          hint: n.path,
+        },
         { commandId: 'app.navigate', args: { path: n.path } },
       );
     }
@@ -100,8 +107,8 @@ export function CommandPaletteHost() {
     setOpen(false);
     const action = actions.get(id);
     if (!action) return;
-    const out = await execute(action.commandId, action.args, { source: 'ui' });
-    if (!out.ok) toast({ title: t('palette.failed'), description: out.error.message, tone: 'danger' });
+    await execute(action.commandId, action.args, { source: 'ui' });
+    // Failures are toasted centrally by commands/feedback.ts and recorded in the audit log.
   }
 
   return <CommandPalette open={open} onOpenChange={setOpen} items={items} onRun={(id) => void run(id)} />;
